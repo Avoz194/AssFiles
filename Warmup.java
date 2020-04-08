@@ -18,7 +18,6 @@ public class Warmup {
         }
         return -1; //x was not found in the array
     }
-
     public static int consistentBinSearch(int[] arr, int x, Stack myStack) {
         //We'll push to myStuck the value of first and last for each step we pass
         // and pop both values as a part of the isConsistent check.
