@@ -1,4 +1,4 @@
-/*public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> {
+public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> {
     private Stack stack;
     private Stack redoStack;
     BacktrackingBST.Node root = null;
@@ -85,5 +85,3 @@
 
 }
 
-
- */

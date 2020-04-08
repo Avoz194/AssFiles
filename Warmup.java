@@ -6,11 +6,11 @@ public class Warmup {
             myStack.push(arr[i]);
             if (x == arr[i])
                 return i;
-            countSteps++;
+            countSteps = countSteps + 1;
             if (countSteps == fd) { // fd steps were made
                 i = i - bk;
                 countSteps = 0;
-                for (int j = 0; j < bk; j = j - 1) { //clearing bk elements from the stack
+                for (int j = bk; j > 0; j = j - 1) { //clearing bk elements from the stack
                     myStack.pop();
                 }
             }
@@ -48,11 +48,11 @@ public class Warmup {
     }
     public static void main(String[]args) {
 
-        //int [] arr = {17,62,19,10,1,78,20,20,20,10};
-        int [] arr = {1,1,2,14,15,16,23,99,100,100,100,132,193,196,197};
+        int [] arr = {17,62,19,10,1,78,20,20,20,10};
+        //int [] arr = {1,1,2,14,15,16,23,99,100,100,100,132,193,196,197};
         Stack st = new Stack ();
-        //int ans = backtrackingSearch(arr,10,3,2,st);
-        int ans = consistentBinSearch(arr,14,st);
+        int ans = backtrackingSearch(arr,20,3,2,st);
+        //int ans = consistentBinSearch(arr,1,st);
         System.out.println(ans);
 
     }
