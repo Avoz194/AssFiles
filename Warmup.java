@@ -26,7 +26,7 @@ public class Warmup {
         int last = arr.length - 1;
         while (first <= last) {
             int reDo = isConsistent(arr);
-            while (reDo > 0) {
+            while (reDo > 0&!myStack.isEmpty()) {
                 last = (int) myStack.pop();
                 first = (int) myStack.pop();
                 reDo = reDo - 1;
@@ -36,7 +36,7 @@ public class Warmup {
                 return mid;
             myStack.push(first);
             myStack.push(last);
-            if (arr[mid] > x) {
+            if (arr[mid] < x) {
                 first = mid + 1;
             } else {
                 last = mid - 1;
@@ -59,11 +59,11 @@ public class Warmup {
 
     public static void main(String[] args) {
 
-        int[] arr = {17, 62, 19, 10, 1, 78, 20, 20, 20, 10};
-        //int [] arr = {1,1,2,14,15,16,23,99,100,100,100,132,193,196,197};
+       // int[] arr = {17, 62, 19, 10, 1, 78, 20, 20, 20, 10};
+        int [] arr = {2,14,15,16,23,99,100,100,100,132,193,196,197};
         Stack st = new Stack();
-        int ans = backtrackingSearch(arr, 20, 3, 2, st);
-        //int ans = consistentBinSearch(arr,1,st);
+       // int ans = backtrackingSearch(arr, 20, 3, 2, st);
+        int ans = consistentBinSearch(arr,1,st);
         System.out.println(ans);
 
     }
