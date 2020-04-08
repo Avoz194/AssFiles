@@ -1,4 +1,3 @@
-/*
 public class BacktrackingArray implements Array<Integer>, Backtrack {
 
 
@@ -69,5 +68,3 @@ public class BacktrackingArray implements Array<Integer>, Backtrack {
 }
 
 
-}
-*/
