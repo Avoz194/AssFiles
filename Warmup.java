@@ -1,17 +1,18 @@
 public class Warmup {
 
     public static int backtrackingSearch(int[] arr, int x, int fd, int bk, Stack myStack) {
+        //assuming fd>bk (as instructed in the forum)
         int countSteps = 0; //counts number of steps
         for (int i = 0; i < arr.length; i = i + 1) {
-            myStack.push(arr[i]);
             if (x == arr[i])
                 return i;
+            myStack.push(arr[i]);
             countSteps = countSteps + 1;
             if (countSteps == fd) { // fd steps were made
-                i = i - bk;
                 countSteps = 0;
                 for (int j = bk; j > 0; j = j - 1) { //clearing bk elements from the stack
                     myStack.pop();
+                    i=i-1;
                 }
             }
         }
