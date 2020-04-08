@@ -21,7 +21,7 @@ public class Warmup {
 
     public static int consistentBinSearch(int[] arr, int x, Stack myStack) {
         //We'll push to myStuck the value of first and last for each step we pass
-        // and pop both values as a part of the isConsistent check.
+        // and pop both values as a part of the isConsistnent check.
         int first = 0;
         int last = arr.length - 1;
         while (first <= last) {
@@ -59,11 +59,11 @@ public class Warmup {
 
     public static void main(String[] args) {
 
-        int[] arr = {17, 62, 19, 10, 1, 78, 20, 20, 20, 10};
-        //int [] arr = {1,1,2,14,15,16,23,99,100,100,100,132,193,196,197};
+       // int[] arr = {17, 62, 19, 10, 1, 78, 20, 20, 20, 10};
+        int [] arr = {2,14,15,16,23,99,100,100,100,132,193,196,197};
         Stack st = new Stack();
-        int ans = backtrackingSearch(arr, 20, 3, 2, st);
-        //int ans = consistentBinSearch(arr,1,st);
+       // int ans = backtrackingSearch(arr, 20, 3, 2, st);
+        int ans = consistentBinSearch(arr,1,st);
         System.out.println(ans);
 
     }
