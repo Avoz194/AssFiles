@@ -1,17 +1,17 @@
 public class Warmup {
     public static int backtrackingSearch(int[] arr, int x, int fd, int bk, Stack myStack) {
-        int countSteps=0; //counts number of steps
-        for(int i=0; i<arr.length; i++){
+        int countSteps = 0; //counts number of steps
+        for (int i = 0; i < arr.length; i++) {
             myStack.push(arr[i]);
-            if(x==arr[i]){
+            if (x == arr[i]) {
                 return i;
                 break;
             }
             countSteps++;
-            if(countSteps==fd){ // fd steps were made
-                i=i-bk;
-                countSteps=0;
-                for(int j=0; j<bk; j--){ //clearing bk elements from the stack
+            if (countSteps == fd) { // fd steps were made
+                i = i - bk;
+                countSteps = 0;
+                for (int j = 0; j < bk; j--) { //clearing bk elements from the stack
                     myStack.pop();
                 }
             }
@@ -44,7 +44,7 @@ public class Warmup {
         double res = Math.random() * 100 - 75;
 
         if (res > 0) {
-            return (int)Math.round(res / 10);
+            return (int) Math.round(res / 10);
         } else {
             return 0;
         }
