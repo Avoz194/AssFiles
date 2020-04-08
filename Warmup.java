@@ -1,4 +1,5 @@
 public class Warmup {
+
     public static int backtrackingSearch(int[] arr, int x, int fd, int bk, Stack myStack) {
         int countSteps = 0; //counts number of steps
         for (int i = 0; i < arr.length; i = i + 1) {
@@ -24,7 +25,7 @@ public class Warmup {
             int mid = (right + left) / 2;
             myStack.push(arr[mid]);
             while (isConsistent(arr) != 0) // the array is not consistent
-                myStack.push();
+                myStack.pop();
             if (arr[mid] == x) // if x was found
                 return mid;
             if (arr[mid] < x)  // x is bigger than the element in arr[mid]
@@ -43,5 +44,18 @@ public class Warmup {
         } else {
             return 0;
         }
+
     }
+    public static void main(String[]args) {
+
+        //int [] arr = {17,62,19,10,1,78,20,20,20,10};
+        int [] arr = {1,1,2,14,15,16,23,99,100,100,100,132,193,196,197};
+        Stack st = new Stack ();
+        //int ans = backtrackingSearch(arr,10,3,2,st);
+        int ans = consistentBinSearch(arr,14,st);
+        System.out.println(ans);
+
+    }
+
 }
+
