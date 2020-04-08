@@ -1,4 +1,4 @@
-/*public class BacktrackingSortedArray implements Array<Integer>, Backtrack {
+public class BacktrackingSortedArray implements Array<Integer>, Backtrack {
     private Stack stack;
     private int[] arr;
     // TODO: implement your code here
@@ -15,8 +15,19 @@
     }
 
     @Override
-    public Integer search(int x) {
-        // TODO: implement your code here          -Nohaaaaa
+    public Integer search(int x) { //Nohaaaaa
+        int right = arr.length - 1;
+        int left = 0;
+        while (right >= left) {
+            int mid = (right + left) / 2;
+            if (arr[mid] == x) // if x was found
+                return mid;
+            if (arr[mid] < x)  // x is bigger than the element in arr[mid]
+                left = mid + 1;
+            else // x is smaller than the element in arr[mid]
+                right = mid - 1;
+        }
+        return-1; // x was not found
     }
 
     @Override
@@ -26,8 +37,10 @@
 
 
     @Override
-    public void delete(Integer index) {
-        // TODO: implement your code here            -Nohaaaaa
+    public void delete(Integer index) { // noaahaha
+        for(int i= index + 1; i < arr.length; i= i + 1){
+            arr[i-1] = arr[i];
+        }
     }
 
     @Override
@@ -36,8 +49,8 @@
     }
 
     @Override
-    public Integer maximum() {
-        // TODO: implement your code here             -Nohaaaaa
+    public Integer maximum() { // noahhahha
+        return(arr[arr.length-1]); // in a sorted array the maximum is the last element
     }
 
     @Override
@@ -65,4 +78,3 @@
         // TODO: implement your code here              -Nohaaaaa
     }
 }
-*/
