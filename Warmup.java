@@ -6,13 +6,13 @@ public class Warmup {
         for (int i = 0; i < arr.length; i = i + 1) {
             if (x == arr[i])
                 return i;
-            myStack.push(arr[i]);
+            myStack.push(i);
             countSteps = countSteps + 1;
             if (countSteps == fd) { // fd steps were made
                 countSteps = 0;
                 for (int j = bk; j > 0; j = j - 1) { //clearing bk elements from the stack
                     myStack.pop();
-                    i=i-1;
+                    i = i - 1;
                 }
             }
         }
@@ -20,22 +20,29 @@ public class Warmup {
     }
 
     public static int consistentBinSearch(int[] arr, int x, Stack myStack) {
-        int right = arr.length - 1;
-        int left = 0;
-        while (right >= left) {
-            int mid = (right + left) / 2;
-            myStack.push(arr[mid]);
-            while (isConsistent(arr) != 0) // the array is not consistent
-                myStack.pop();
-            if (arr[mid] == x) // if x was found
+        int first = 0;
+        int last = arr.length - 1;
+        while (first <= last) {
+            int reDo = isConsistent(arr);
+            while (reDo > 0) {
+                last = (int) myStack.pop();
+                first = (int) myStack.pop();
+                reDo = reDo - 1;
+            }
+            int mid = (last + first) / 2;
+            if (arr[mid] == x)
                 return mid;
-            if (arr[mid] < x)  // x is bigger than the element in arr[mid]
-                left = mid + 1;
-            else // x is smaller than the element in arr[mid]
-                right = mid - 1;
+            myStack.push(first);
+            myStack.push(last);
+            if (arr[mid] > x) {
+                first = mid + 1;
+            } else {
+                last = mid - 1;
+            }
         }
-        return-1; // x was not found
-}
+        return -1;
+    }
+
 
     private static int isConsistent(int[] arr) {
         double res = Math.random() * 100 - 75;
@@ -47,12 +54,13 @@ public class Warmup {
         }
 
     }
-    public static void main(String[]args) {
 
-        int [] arr = {17,62,19,10,1,78,20,20,20,10};
+    public static void main(String[] args) {
+
+        int[] arr = {17, 62, 19, 10, 1, 78, 20, 20, 20, 10};
         //int [] arr = {1,1,2,14,15,16,23,99,100,100,100,132,193,196,197};
-        Stack st = new Stack ();
-        int ans = backtrackingSearch(arr,20,3,2,st);
+        Stack st = new Stack();
+        int ans = backtrackingSearch(arr, 20, 3, 2, st);
         //int ans = consistentBinSearch(arr,1,st);
         System.out.println(ans);
 
