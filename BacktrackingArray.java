@@ -12,8 +12,8 @@ public class BacktrackingArray implements Array<Integer>, Backtrack {
     }
 
     @Override
-    public Integer get(int index){
-        // TODO: implement your code here   -Nohaaaaa
+    public Integer get(int index){ // Nohaaaaa
+        return arr[index];
     }
 
     @Override
@@ -32,8 +32,13 @@ public class BacktrackingArray implements Array<Integer>, Backtrack {
     }
 
     @Override
-    public Integer minimum() {
-        // TODO: implement your code here     -Nohaaaaa
+    public Integer minimum() { // noaahhhh
+        int min = arr[0];
+        for(int i=1; 1<arr.length; i= i+1){
+            if(arr[i] < min)           // if found a smaller element
+                min= arr[i];
+        }
+        return min;
     }
 
     @Override
