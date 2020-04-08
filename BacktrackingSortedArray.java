@@ -60,7 +60,7 @@ public class BacktrackingSortedArray implements Array<Integer>, Backtrack {
 
     @Override
     public Integer predecessor(Integer index) {
-        // TODO: implement your code here           -Nohaaaaa
+        // TODO: implement your c  ode here           -Nohaaaaa
     }
 
     @Override
