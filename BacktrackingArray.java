@@ -23,7 +23,8 @@ public class BacktrackingArray implements Array<Integer>, Backtrack {
 
     @Override
     public void insert(Integer x) { // noahah
-        // TODO: implement your code here - noaoahh
+        int count = 0;
+
     }
 
     @Override
