@@ -50,7 +50,7 @@ public class BacktrackingSortedArray implements Array<Integer>, Backtrack {
 
     @Override
     public Integer maximum() { // noahhahha
-        return(arr[arr.length-1]); // in a sorted array the maximum is the last element
+        return(arr.length-1); // in a sorted array the maximum is at the last index
     }
 
     @Override
