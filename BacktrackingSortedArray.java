@@ -33,7 +33,7 @@ public class BacktrackingSortedArray implements Array<Integer>, Backtrack {
         int index = 0;
         if (currSize > 0) {
             //search for index
-            while (index<currSize&&arr[index] < x) {
+            while (index < currSize && arr[index] < x) {
                 index = index + 1;
             }
         }
@@ -42,6 +42,7 @@ public class BacktrackingSortedArray implements Array<Integer>, Backtrack {
             arr[i + 1] = arr[i];
         arr[index] = x;
         currSize = currSize + 1;
+        stack.push(new ArrTrackingData(index, x, 'i'));
 
 /*          ~~~    Binary Search option (need to finalize)~~~
            int first = 0;
@@ -67,7 +68,7 @@ public class BacktrackingSortedArray implements Array<Integer>, Backtrack {
     }
 
     public void delete(Integer index) {
-        stack.push(new ArrTrackingData(index,arr[index],'d')); //insert
+        stack.push(new ArrTrackingData(index, arr[index], 'd')); //insert
         for (int i = index + 1; i < currSize; i = i + 1) {
             arr[i - 1] = arr[i];
         }
@@ -90,20 +91,38 @@ public class BacktrackingSortedArray implements Array<Integer>, Backtrack {
     }
 
     public Integer successor(Integer index) {
-        if(index < currSize)
-            return(index+1);
+        if (index < currSize)
+            return (index + 1);
         return -1;
     }
 
     public Integer predecessor(Integer index) {
-        if((index != 0) && (index < currSize))
-            return(index-1);
+        if ((index != 0) && (index < currSize))
+            return (index - 1);
         return -1;
     }
 
     public void backtrack() {
-        // TODO: implement your code here
+        if (!stack.isEmpty()) {
+            ArrTrackingData last_op = (ArrTrackingData) stack.pop();
+            if (last_op.getOperation() == 'd') {
+                /*Backtrack delete operations. Didn't use the 'insert' function as we want to make sure
+                 we insert the value back to the correct index
+                 (might not happen in case we have duplicate values in the array )*/
+                for (int i = currSize - 1; i >= last_op.getIndex(); i = i - 1) {
+                    arr[i + 1] = arr[i];
+                }
+                arr[last_op.getIndex()] = last_op.getValue();
+                currSize = currSize + 1;
+            } else {
+                /*Backtrack insert operations, use the delete function and make sure to 'pop'
+                 the delete operation we've create (by using the delete function) from the stack*/
+                delete(last_op.getIndex());
+                stack.pop();
+            }
 
+            System.out.println("backtracking performed");
+        }
 
 
     }
