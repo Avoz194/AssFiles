@@ -13,30 +13,27 @@ public class BacktrackingArray implements Array<Integer>, Backtrack {
     }
 
     public Integer get(int index) {
-        if (index < currSize) {
-            return arr[index];
-        } else
-            return -1;
+        return arr[index];
     }
 
     public Integer search(int x) {
-        for (int i = 0; i < currSize; i = i + 1) {
+        for (int i = 0; i < currSize - 1; i = i + 1) {
             if (x == arr[i]) return i;
         }
         return -1;
     }
 
     public void insert(Integer x) {
-        if (currSize < arr.length - 1) { //insert only if array is not full
+        if(currSize < arr.length - 1) { //insert only if array is not full
             arr[currSize] = x;
             currSize = currSize + 1;
-            stack.push(new ArrTrackingData(currSize - 1, x, 'i')); //insert into stack
+            stack.push(new ArrTrackingData(currSize-1, x, 'i')); //insert into stack
         }
     }
 
     public void delete(Integer index) {
         if (index < currSize) {
-            stack.push(new ArrTrackingData(index, arr[index], 'd')); //insert into stack
+            stack.push(new ArrTrackingData(index,arr[index],'d')); //insert into stack
             arr[index] = arr[currSize - 1];
             currSize = currSize - 1;
         }
@@ -48,7 +45,7 @@ public class BacktrackingArray implements Array<Integer>, Backtrack {
         else {
             int min = arr[0]; // minimum value
             int minIndex = 0; // index of the minimum value
-            for (int i = 1; i < currSize; i = i + 1) {
+            for (int i = 1; 1 < currSize; i = i + 1) {
                 if (arr[i] < min) {          // if found a smaller element
                     min = arr[i];
                     minIndex = i;
@@ -63,7 +60,7 @@ public class BacktrackingArray implements Array<Integer>, Backtrack {
         else {
             int max = arr[0]; // maximum value
             int maxIndex = 0; // index of the maximum value
-            for (int i = 1; i < currSize; i = i + 1) {
+            for (int i = 1; 1 < currSize; i = i + 1) {
                 if (arr[i] > max) {          // if found a bigger element
                     max = arr[i];
                     maxIndex = i;
@@ -96,14 +93,15 @@ public class BacktrackingArray implements Array<Integer>, Backtrack {
     }
 
     public void backtrack() {
-        if (!stack.isEmpty()) {
-            ArrTrackingData last_op = (ArrTrackingData) stack.pop();
-            if (last_op.getOperation() == 'd') {
-                arr[currSize] = arr[last_op.getIndex()];
-                arr[last_op.getIndex()] = last_op.getValue();
-                currSize = currSize + 1;
-            } else // the last operation was an insert
-                currSize = currSize - 1;
+        if(!stack.isEmpty()){
+            ArrTrackingData last_op = (ArrTrackingData)stack.pop();
+            if(last_op.getOperation()=='d'){
+               arr[currSize] = arr[last_op.getIndex()];
+               arr[last_op.getIndex()] = last_op.getValue();
+               currSize = currSize + 1;
+            }
+            else // the last operation was an insert
+                currSize = currSize-1;
             System.out.println("backtracking performed");
         }
     }
@@ -113,14 +111,10 @@ public class BacktrackingArray implements Array<Integer>, Backtrack {
     }
 
     public void print() {
-        if (currSize == 0) {
-            System.out.println("");
-        } else {
-            for (int i = 0; i < currSize - 1; i = i + 1) {
-                System.out.print(arr[i] + " ");
-            }
-            System.out.print(arr[currSize - 1]); // print the last element without an additional space
+        for (int i = 0; i < currSize - 1; i = i + 1) {
+            System.out.print(arr[i] + " ");
         }
+        System.out.print(arr[currSize - 1]); // print the last element without an additional space
     }
 }
 
