@@ -133,10 +133,14 @@ public class BacktrackingSortedArray implements Array<Integer>, Backtrack {
     }
 
     public void print() {
-        for (int i = 0; i < currSize - 1; i = i + 1) {
-            System.out.print(arr[i] + " ");
+        if (currSize == 0) {
+            System.out.println("");
+        } else {
+            for (int i = 0; i < currSize - 1; i = i + 1) {
+                System.out.print(arr[i] + " ");
+            }
+            System.out.print(arr[currSize - 1]); // print the last element without an additional space
         }
-        System.out.print(arr[currSize - 1]); // print the last element without an additional space
     }
 }
 

@@ -64,7 +64,7 @@ public class Warmup {
         Stack st = new Stack();
        // int ans = backtrackingSearch(arr, 20, 3, 2, st);
         int ans = consistentBinSearch(arr,1,st);
-        System.out.println(ans);
+        System.out.println(ans+"\n\n\n a");
 
     }
 
