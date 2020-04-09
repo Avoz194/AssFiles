@@ -10,13 +10,11 @@ public class BacktrackingSortedArray implements Array<Integer>, Backtrack {
         this.currSize = 0;
     }
 
-    @Override
     public Integer get(int index) {
         return arr[index];
     }
 
-    @Override
-    public Integer search(int x) { //Nohaaaaa
+    public Integer search(int x) {
         int right = currSize - 1;
         int left = 0;
         while (right >= left) {
@@ -90,19 +88,18 @@ public class BacktrackingSortedArray implements Array<Integer>, Backtrack {
             return (currSize - 1); // in a sorted array the maximum is at the last index
     }
 
-    @Override
     public Integer successor(Integer index) {
-        // TODO: implement your code here
-    }
-
-    @Override
-    public Integer predecessor(Integer index) { //nohaaa
-        if ((index != 0) && (index < currSize))
-            return (index - 1);
+        if(index < currSize)
+            return(index+1);
         return -1;
     }
 
-    @Override
+    public Integer predecessor(Integer index) {
+        if((index != 0) && (index < currSize))
+            return(index-1);
+        return -1;
+    }
+
     public void backtrack() {
         // TODO: implement your code here
     }
@@ -111,8 +108,7 @@ public class BacktrackingSortedArray implements Array<Integer>, Backtrack {
         // Do not implement anything here!!
     }
 
-
-    public void print() { // noahah
+    public void print() {
         for (int i = 0; i < currSize - 1; i = i + 1) {
             System.out.print(arr[i] + " ");
         }

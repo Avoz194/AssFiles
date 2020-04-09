@@ -12,7 +12,7 @@ public class BacktrackingArray implements Array<Integer>, Backtrack {
         this.currSize = 0;
     }
 
-    public Integer get(int index) { // Nohaaaaa
+    public Integer get(int index) {
         return arr[index];
     }
 
@@ -24,16 +24,19 @@ public class BacktrackingArray implements Array<Integer>, Backtrack {
     }
 
     public void insert(Integer x) {
-        //pointer to the first unoccupied cell
-        arr[currSize] = x;
-        currSize = currSize + 1;
+        while (currSize < arr.length - 1) { //insert only while array is not full
+                arr[currSize] = x;
+                currSize = currSize + 1;
+                stack.push(x); // fix
+        }
     }
 
     public void delete(Integer index) {
         if (index < currSize) {
             arr[index] = arr[currSize - 1];
             currSize = currSize - 1;
-        }
+            stack.push(arr[index]); //fix
+
 
     }
 
@@ -104,6 +107,6 @@ public class BacktrackingArray implements Array<Integer>, Backtrack {
         System.out.print(arr[currSize - 1]); // print the last element without an additional space
     }
 }
-}
+
 
 
