@@ -36,7 +36,7 @@ public class BacktrackingArray implements Array<Integer>, Backtrack {
             arr[index] = arr[currSize - 1];
             currSize = currSize - 1;
             stack.push(arr[index]); //fix
-
+        }
 
     }
 
