@@ -298,7 +298,7 @@ public class MainTests {
         backarr1.backtrack();
         System.out.print("arr values:"); backarr1.print();
         System.out.println("\n");
-*/
+
 
         //***************Sorted Array Tests**************
 
