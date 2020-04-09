@@ -47,27 +47,6 @@ public class BacktrackingSortedArray implements Array<Integer>, Backtrack {
         currSize = currSize + 1;
         stack.push(new ArrTrackingData(index, x, 'i'));
 
-/*          ~~~    Binary Search option (need to finalize)~~~
-           int first = 0;
-            int last = currSize - 1;
-            int mid = (last + first) / 2;
-
-            while ((mid > 0) && (mid < currSize - 1) && (arr[mid] < x || arr[mid - 1] > x)) {
-                if (arr[mid - 1] > x)
-                    last = mid - 1;
-                if (arr[mid] < x)
-                    first = mid;
-                mid = (first + last) / 2;
-                if (mid == first){
-                    if (mid ==0)
-                        if(arr[mid]>x)
-                             mid = 0;
-                    else
-                        mid =last;
-                }
-            }
-            index = mid;
-         */
     }
 
     public void delete(Integer index) {
