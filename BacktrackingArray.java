@@ -40,7 +40,7 @@ public class BacktrackingArray implements Array<Integer>, Backtrack {
         int min = arr[0];
         for(int i=1; 1<arr.length; i= i+1){
             if(arr[i] < min)           // if found a smaller element
-                min= arr[i];
+                min= i;
         }
         return min;
     }
@@ -51,8 +51,12 @@ public class BacktrackingArray implements Array<Integer>, Backtrack {
     }
 
     @Override
-    public Integer successor(Integer index) {
-        // TODO: implement your code here      -Nohaaaaa
+    public Integer successor(Integer index) { //nohaaa
+        int successor = arr[0];
+        for(int i=1; i<arr.length; i=i+1){
+            if
+
+        }
     }
 
     @Override

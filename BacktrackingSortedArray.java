@@ -1,4 +1,4 @@
-/*public class BacktrackingSortedArray implements Array<Integer>, Backtrack {
+public class BacktrackingSortedArray implements Array<Integer>, Backtrack {
     private Stack stack;
     private int[] arr;
     // TODO: implement your code here
@@ -77,7 +77,8 @@
     public void print() { // noahah
         for(int i=0; i<arr.length-1; i= i + 1){
             System.out.print(arr[i] + " ");
-            System.out.print(arr[arr.length-1]); // print the last element without an additional space
+        }
+        System.out.print(arr[arr.length-1]); // print the last element without an additional space
         }
     }
-}
+
