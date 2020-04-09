@@ -66,7 +66,8 @@ public class BacktrackingSortedArray implements Array<Integer>, Backtrack {
          */
     }
 
-    public void delete(Integer index) { // noaahaha
+    public void delete(Integer index) {
+        stack.push(new ArrTrackingData(index,arr[index],'d')); //insert
         for (int i = index + 1; i < currSize; i = i + 1) {
             arr[i - 1] = arr[i];
         }
