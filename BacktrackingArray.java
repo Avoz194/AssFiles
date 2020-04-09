@@ -102,7 +102,6 @@ public class BacktrackingArray implements Array<Integer>, Backtrack {
             }
             else // the last operation was an insert
                 currSize = currSize-1;
-
             System.out.print("backtracking performed");
         }
     }
