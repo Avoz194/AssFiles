@@ -24,18 +24,18 @@ public class BacktrackingArray implements Array<Integer>, Backtrack {
     }
 
     public void insert(Integer x) {
-        while (currSize < arr.length - 1) { //insert only while array is not full
-                arr[currSize] = x;
-                currSize = currSize + 1;
-                stack.push(x); // fix
+        if(currSize < arr.length - 1) { //insert only if array is not full
+            arr[currSize] = x;
+            currSize = currSize + 1;
+            stack.push(new ArrTrackingData(x, arr[x], 'i')); //insert into stack
         }
     }
 
     public void delete(Integer index) {
         if (index < currSize) {
+            stack.push(new ArrTrackingData(index,arr[index],'d')); //insert into stack
             arr[index] = arr[currSize - 1];
             currSize = currSize - 1;
-            stack.push(arr[index]); //fix
         }
 
     }
@@ -93,7 +93,18 @@ public class BacktrackingArray implements Array<Integer>, Backtrack {
     }
 
     public void backtrack() {
-        // TODO: implement your code here       -Nohaaaaa
+        if(!stack.isEmpty()){
+            ArrTrackingData last_op = (ArrTrackingData)stack.pop();
+            if(last_op.getOperation()=='d'){
+               arr[currSize] = arr[last_op.getIndex()];
+               arr[last_op.getIndex()] = last_op.getValue();
+               currSize = currSize + 1;
+            }
+            else // the last operation was an insert
+                currSize = currSize-1;
+
+            System.out.print("backtracking performed");
+        }
     }
 
     public void retrack() {
