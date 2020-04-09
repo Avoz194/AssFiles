@@ -1,4 +1,4 @@
-/*public class BacktrackingArray implements Array<Integer>, Backtrack {
+public class BacktrackingArray implements Array<Integer>, Backtrack {
 
 
     private Stack stack;
@@ -23,8 +23,11 @@
 
     @Override
     public void insert(Integer x) { // noahah
-        int count = 0;
-        // TODO: implement your code here    noaaha
+        int curr = 0; //pointer to the first unoccupied cell
+        if (curr < arr.length) {
+            arr[curr] = x;
+            curr = curr + 1;
+        }
     }
 
     @Override
@@ -72,5 +75,5 @@
         // TODO: implement your code here
     }
 }
-*/
+
 
