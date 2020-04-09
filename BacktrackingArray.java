@@ -67,13 +67,26 @@ public class BacktrackingArray implements Array<Integer>, Backtrack {
         }
     }
 
-    @Override
     public Integer successor(Integer index) {
-        // TODO: implement your code here      -Nohaaaaa
+        int closestInd = -1;
+        if (index < currSize) {
+            for (int i = 0; i < currSize; i = i + 1) {
+                if (arr[i] > arr[index] & (closestInd == -1 || arr[closestInd] > arr[i])) //looking for a value between arr[closetedInd] and arr[index]
+                    closestInd = i;
+            }
+        }
+        return closestInd;
     }
 
     public Integer predecessor(Integer index) {
-        // TODO: implement your code here
+        int closestInd = -1;
+        if (index < currSize) {
+            for (int i = 0; i < currSize; i = i + 1) {
+                if (arr[i] < arr[index] & (closestInd == -1 || arr[closestInd] < arr[i])) //looking for a value between arr[index] and arr[closetedInd]
+                    closestInd = i;
+            }
+        }
+        return closestInd;
     }
 
     public void backtrack() {

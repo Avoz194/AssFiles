@@ -31,13 +31,43 @@ public class BacktrackingSortedArray implements Array<Integer>, Backtrack {
         return -1; // x was not found
     }
 
-    @Override
     public void insert(Integer x) {
-        // TODO: implement your code here
+        int index = 0;
+        if (currSize > 0) {
+            //search for index
+            while (index<currSize&&arr[index] < x) {
+                index = index + 1;
+            }
+        }
+        //push all values from index and on one cell forward, and insert x to arr[index]
+        for (int i = currSize - 1; i >= index; i = i - 1)
+            arr[i + 1] = arr[i];
+        arr[index] = x;
+        currSize = currSize + 1;
+
+/*          ~~~    Binary Search option (need to finalize)~~~
+           int first = 0;
+            int last = currSize - 1;
+            int mid = (last + first) / 2;
+
+            while ((mid > 0) && (mid < currSize - 1) && (arr[mid] < x || arr[mid - 1] > x)) {
+                if (arr[mid - 1] > x)
+                    last = mid - 1;
+                if (arr[mid] < x)
+                    first = mid;
+                mid = (first + last) / 2;
+                if (mid == first){
+                    if (mid ==0)
+                        if(arr[mid]>x)
+                             mid = 0;
+                    else
+                        mid =last;
+                }
+            }
+            index = mid;
+         */
     }
 
-
-    @Override
     public void delete(Integer index) { // noaahaha
         for (int i = index + 1; i < currSize; i = i + 1) {
             arr[i - 1] = arr[i];
@@ -45,17 +75,16 @@ public class BacktrackingSortedArray implements Array<Integer>, Backtrack {
         currSize = currSize - 1;
     }
 
-    @Override
+
     public Integer minimum() {
-        if (currSize==0)
+        if (currSize == 0)
             return -1;
         else
             return (0); // in a sorted array the maximum is at the last index
     }
 
-    @Override
-    public Integer maximum() { // noahhahha
-        if(currSize==0)
+    public Integer maximum() {
+        if (currSize == 0)
             return -1;
         else
             return (currSize - 1); // in a sorted array the maximum is at the last index
@@ -68,8 +97,8 @@ public class BacktrackingSortedArray implements Array<Integer>, Backtrack {
 
     @Override
     public Integer predecessor(Integer index) { //nohaaa
-        if((index != 0) && (index < currSize))
-            return(index-1);
+        if ((index != 0) && (index < currSize))
+            return (index - 1);
         return -1;
     }
 
@@ -78,12 +107,11 @@ public class BacktrackingSortedArray implements Array<Integer>, Backtrack {
         // TODO: implement your code here
     }
 
-    @Override
     public void retrack() {
         // Do not implement anything here!!
     }
 
-    @Override
+
     public void print() { // noahah
         for (int i = 0; i < currSize - 1; i = i + 1) {
             System.out.print(arr[i] + " ");
