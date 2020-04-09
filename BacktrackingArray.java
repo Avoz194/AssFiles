@@ -95,12 +95,12 @@ public class BacktrackingArray implements Array<Integer>, Backtrack {
     public void backtrack() {
         if(!stack.isEmpty()){
             ArrTrackingData last_op = (ArrTrackingData)stack.pop();
-            if(last_op.getOperation()=='d'){
+            if(last_op.getOperation()=='d'){ // the last operation was "delete"
                arr[currSize] = arr[last_op.getIndex()];
                arr[last_op.getIndex()] = last_op.getValue();
                currSize = currSize + 1;
             }
-            else // the last operation was an insert
+            else // the last operation was "insert"
                 currSize = currSize-1;
             System.out.println("backtracking performed");
         }
