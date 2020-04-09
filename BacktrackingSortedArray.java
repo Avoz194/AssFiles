@@ -11,7 +11,10 @@ public class BacktrackingSortedArray implements Array<Integer>, Backtrack {
     }
 
     public Integer get(int index) {
-        return arr[index];
+        if (index < currSize) {
+            return arr[index];
+        } else
+            return -1;
     }
 
     public Integer search(int x) {
@@ -81,18 +84,18 @@ public class BacktrackingSortedArray implements Array<Integer>, Backtrack {
         if (currSize == 0)
             return -1;
         else
-            return (0); // in a sorted array the maximum is at the last index
+            return (0); // in a sorted array the minimum is in the first index
     }
 
     public Integer maximum() {
         if (currSize == 0)
             return -1;
         else
-            return (currSize - 1); // in a sorted array the maximum is at the last index
+            return (currSize - 1); // in a sorted array the maximum is in the last index
     }
 
     public Integer successor(Integer index) {
-        if (index < currSize)
+        if (index < currSize-1)
             return (index + 1);
         return -1;
     }
