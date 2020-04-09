@@ -12,7 +12,7 @@ public class BacktrackingArray implements Array<Integer>, Backtrack {
         this.currSize = 0;
     }
 
-    public Integer get(int index) { // Nohaaaaa
+    public Integer get(int index) {
         return arr[index];
     }
 
