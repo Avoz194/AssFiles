@@ -1,12 +1,13 @@
-/*public class BacktrackingSortedArray implements Array<Integer>, Backtrack {
+public class BacktrackingSortedArray implements Array<Integer>, Backtrack {
     private Stack stack;
     private int[] arr;
-    // TODO: implement your code here
+    private int curr;
 
     // Do not change the constructor's signature
     public BacktrackingSortedArray(Stack stack, int size) {
         this.stack = stack;
         arr = new int[size];
+        this.curr = 0;
     }
 
     @Override
