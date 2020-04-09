@@ -149,6 +149,11 @@ public class MainTests {
         //Backtracking Tests
 
         System.out.println("\n\n\nBacktracking Tests: \n");
+        //BackTrack Text:
+        System.out.println("BackTrack Operation Printed message:");
+        backarr1.backtrack();
+        System.out.println("\n");
+
         //Backtracking Tests A
         System.out.println("Backtracking Tests A: undo Insert \n");
         st = new Stack();
@@ -182,6 +187,7 @@ public class MainTests {
         System.out.println();
         backarr1.backtrack();
         System.out.print("arr values:"); backarr1.print();
+        System.out.println("\n");
 
 
         //Test B - undo delete
@@ -217,7 +223,7 @@ public class MainTests {
         System.out.print("arr values:"); backarr1.print();
         System.out.println("\n");
         //Test B3 - Delete twice
-        System.out.print("Test B3: deleted 2 values (9,7). Before deletion: ");
+        System.out.print("Test B3: deleted 2 values (9,6). Before deletion: ");
         backarr1.print();
         System.out.println();
         System.out.print("after deletion 1: ");
