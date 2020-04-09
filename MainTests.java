@@ -298,7 +298,7 @@ public class MainTests {
         backarr1.backtrack();
         System.out.print("arr values:"); backarr1.print();
         System.out.println("\n");
-*/
+
 
         //***************Sorted Array Tests**************
 
@@ -415,6 +415,7 @@ public class MainTests {
 
         System.out.println("Minimum Test num 3 : Expected: 10 .Function Output:" + backarr2.minimum());
 
+        System.out.println("Noa is the Queen");
 
         //Maximum Tests
         System.out.println("\n\nMaximum Tests: \n");
