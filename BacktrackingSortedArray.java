@@ -61,8 +61,10 @@ public class BacktrackingSortedArray implements Array<Integer>, Backtrack {
     }
 
     @Override
-    public Integer predecessor(Integer index) {
-        // TODO: implement your c  ode here           -Nohaaaaa
+    public Integer predecessor(Integer index) { //nohaaa
+        if((index != 0) && (index < curr))
+            return(index-1);
+        return -1;
     }
 
     @Override
