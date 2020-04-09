@@ -17,7 +17,7 @@ public class BacktrackingSortedArray implements Array<Integer>, Backtrack {
 
     @Override
     public Integer search(int x) { //Nohaaaaa
-        int right = arr.length - 1;
+        int right = curr - 1;
         int left = 0;
         while (right >= left) {
             int mid = (right + left) / 2;
@@ -39,9 +39,10 @@ public class BacktrackingSortedArray implements Array<Integer>, Backtrack {
 
     @Override
     public void delete(Integer index) { // noaahaha
-        for(int i= index + 1; i < arr.length; i= i + 1){
+        for(int i= index + 1; i < curr; i= i + 1){
             arr[i-1] = arr[i];
         }
+        curr = curr - 1;
     }
 
     @Override
@@ -51,7 +52,7 @@ public class BacktrackingSortedArray implements Array<Integer>, Backtrack {
 
     @Override
     public Integer maximum() { // noahhahha
-        return(arr.length-1); // in a sorted array the maximum is at the last index
+        return(curr-1); // in a sorted array the maximum is at the last index
     }
 
     @Override
@@ -76,10 +77,10 @@ public class BacktrackingSortedArray implements Array<Integer>, Backtrack {
 
     @Override
     public void print() { // noahah
-        for(int i=0; i<arr.length-1; i= i + 1){
+        for(int i=0; i<curr; i= i + 1){
             System.out.print(arr[i] + " ");
         }
-        System.out.print(arr[arr.length-1]); // print the last element without an additional space
+        System.out.print(arr[curr-1]); // print the last element without an additional space
         }
     }
 

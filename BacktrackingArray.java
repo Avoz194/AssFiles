@@ -31,12 +31,15 @@ public class BacktrackingArray implements Array<Integer>, Backtrack {
     }
 
     public Integer minimum() {
-        int min = arr[0];
-        for(int i=1; 1<arr.length; i= i+1){
-            if(arr[i] < min)           // if found a smaller element
-                min= i;
+        int min = arr[0]; // minimum value
+        int minIndex = 0; // index of the minimum value
+        for(int i=1; 1<curr; i= i+1){
+            if(arr[i] < min) {          // if found a smaller element
+                min = arr[i];
+                minIndex = i;
+            }
         }
-        return min;
+        return minIndex;
     }
 
     public Integer maximum() {
