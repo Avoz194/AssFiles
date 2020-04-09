@@ -3,47 +3,68 @@ public class BacktrackingArray implements Array<Integer>, Backtrack {
 
     private Stack stack;
     private int[] arr;
-    private int curr;
+    private int currSize;
 
     // Do not change the constructor's signature
     public BacktrackingArray(Stack stack, int size) {
         this.stack = stack;
         arr = new int[size];
-        this.curr = 0;
+        this.currSize = 0;
     }
 
-    public Integer get(int index){ // Nohaaaaa
+    public Integer get(int index) { // Nohaaaaa
         return arr[index];
     }
 
     public Integer search(int x) {
-        // TODO: implement your  code here
+        for (int i = 0; i < currSize - 1; i = i + 1) {
+            if (x == arr[i]) return i;
+        }
+        return -1;
     }
 
     public void insert(Integer x) {
-         //pointer to the first unoccupied cell
-            arr[curr] = x;
-            curr = curr + 1;
+        //pointer to the first unoccupied cell
+        arr[currSize] = x;
+        currSize = currSize + 1;
     }
 
     public void delete(Integer index) {
-        // TODO: implement your code here
+        if (index < currSize) {
+            arr[index] = arr[currSize - 1];
+            currSize = currSize - 1;
+        }
+
     }
 
     public Integer minimum() {
-        int min = arr[0]; // minimum value
-        int minIndex = 0; // index of the minimum value
-        for(int i=1; 1<curr; i= i+1){
-            if(arr[i] < min) {          // if found a smaller element
-                min = arr[i];
-                minIndex = i;
+        if (currSize == 0) return -1;
+        else {
+            int min = arr[0]; // minimum value
+            int minIndex = 0; // index of the minimum value
+            for (int i = 1; 1 < currSize; i = i + 1) {
+                if (arr[i] < min) {          // if found a smaller element
+                    min = arr[i];
+                    minIndex = i;
+                }
             }
+            return minIndex;
         }
-        return minIndex;
     }
 
     public Integer maximum() {
-        // TODO: implement your code here
+        if (currSize == 0) return -1;
+        else {
+            int max = arr[0]; // maximum value
+            int maxIndex = 0; // index of the maximum value
+            for (int i = 1; 1 < currSize; i = i + 1) {
+                if (arr[i] > max) {          // if found a bigger element
+                    max = arr[i];
+                    maxIndex = i;
+                }
+            }
+            return maxIndex;
+        }
     }
 
     @Override
@@ -64,8 +85,12 @@ public class BacktrackingArray implements Array<Integer>, Backtrack {
     }
 
     public void print() {
-        // TODO: implement your code here
+        for (int i = 0; i < currSize - 1; i = i + 1) {
+            System.out.print(arr[i] + " ");
+        }
+        System.out.print(arr[currSize - 1]); // print the last element without an additional space
     }
+}
 }
 
 
