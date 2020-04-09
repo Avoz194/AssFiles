@@ -10,12 +10,10 @@ public class BacktrackingSortedArray implements Array<Integer>, Backtrack {
         this.currSize = 0;
     }
 
-    @Override
     public Integer get(int index) {
         return arr[index];
     }
 
-    @Override
     public Integer search(int x) {
         int right = currSize - 1;
         int left = 0;
@@ -31,20 +29,16 @@ public class BacktrackingSortedArray implements Array<Integer>, Backtrack {
         return -1; // x was not found
     }
 
-    @Override
     public void insert(Integer x) {
         // TODO: implement your code here
     }
 
-
-    @Override
     public void delete(Integer index) {
         for (int i = index + 1; i < currSize; i = i + 1) {
             arr[i - 1] = arr[i];
         }
         currSize = currSize - 1;
     }
-
 
     public Integer minimum() {
         if (currSize==0)
@@ -53,7 +47,6 @@ public class BacktrackingSortedArray implements Array<Integer>, Backtrack {
             return (0); // in a sorted array the maximum is at the last index
     }
 
-
     public Integer maximum() {
         if(currSize==0)
             return -1;
@@ -61,20 +54,17 @@ public class BacktrackingSortedArray implements Array<Integer>, Backtrack {
             return (currSize - 1); // in a sorted array the maximum is at the last index
     }
 
-
     public Integer successor(Integer index) {
         if(index < currSize)
             return(index+1);
         return -1;
     }
 
-
     public Integer predecessor(Integer index) {
         if((index != 0) && (index < currSize))
             return(index-1);
         return -1;
     }
-
 
     public void backtrack() {
         // TODO: implement your code here
@@ -85,7 +75,6 @@ public class BacktrackingSortedArray implements Array<Integer>, Backtrack {
         // Do not implement anything here!!
     }
 
-    @Override
     public void print() {
         for (int i = 0; i < currSize - 1; i = i + 1) {
             System.out.print(arr[i] + " ");

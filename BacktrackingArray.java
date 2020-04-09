@@ -67,7 +67,6 @@ public class BacktrackingArray implements Array<Integer>, Backtrack {
         }
     }
 
-    @Override
     public Integer successor(Integer index) {
         // TODO: implement your code here      -Nohaaaaa
     }
@@ -91,6 +90,6 @@ public class BacktrackingArray implements Array<Integer>, Backtrack {
         System.out.print(arr[currSize - 1]); // print the last element without an additional space
     }
 }
-}
+
 
 
