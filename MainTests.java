@@ -409,11 +409,11 @@ public class MainTests {
         //Minimum 2
         backarr2.insert(-1);
 
-        System.out.println("Minimum Test num 2 : Expected: 10 .Function Output:" + backarr2.minimum());
+        System.out.println("Minimum Test num 2 : Expected: 0 .Function Output:" + backarr2.minimum());
         //Minimum 3
         backarr2.insert(9);
 
-        System.out.println("Minimum Test num 3 : Expected: 10 .Function Output:" + backarr2.minimum());
+        System.out.println("Minimum Test num 3 : Expected: 0 .Function Output:" + backarr2.minimum());
 
         System.out.println("Noa is the Queen");
 
