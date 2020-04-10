@@ -116,10 +116,10 @@ public class MainTests {
         System.out.println("Maximum Test num 1 - maximum is first: Expected: 0. Function Output:" + backarr1.maximum());
         //Maximum 2
         backarr1.insert(10000);
-        System.out.println("Maximum Test num 2 - minimum is last: Expected: 10. Function Output:" + backarr1.maximum());
+        System.out.println("Maximum Test num 2 - maximum is last: Expected: 10. Function Output:" + backarr1.maximum());
         //Maximum 3
         backarr1.insert(10);
-        System.out.println("Maximum Test num 3 - minimum is in the middle: Expected: 0. Function Output:" + backarr1.maximum());
+        System.out.println("Maximum Test num 3 - maximum is in the middle: Expected: 10. Function Output:" + backarr1.maximum());
 
 
         //Predecessor Tests
