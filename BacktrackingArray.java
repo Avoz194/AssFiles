@@ -16,7 +16,7 @@ public class BacktrackingArray implements Array<Integer>, Backtrack {
         if (index < currSize) {
             return arr[index];
         } else
-            return -1;
+            return null;
     }
 
     public Integer search(int x) {

@@ -65,7 +65,7 @@ public class MainTests {
         System.out.println("Get Test num 1 - index exists: Expected: 1000"+ " . Function Output:" + backarr1.get(0));
         System.out.println("Get Test num 2 - index exists: Expected: 0"+ " . Function Output:" + backarr1.get(1));
         System.out.println("Get Test num 3 - index exists last: Expected: 16"+ " . Function Output:" + backarr1.get(9));
-        System.out.println("Get Test num 4 - index doesn't exist: Expected: -1"+ " . Function Output:" +backarr1.get(17));
+        System.out.println("Get Test num 4 - index doesn't exist: Expected: null"+ " . Function Output:" +backarr1.get(17));
 
 
         //searchTests
@@ -378,7 +378,7 @@ public class MainTests {
         System.out.println("Get Test num 1 - index exists: Expected: 0"+ " . Function Output:" + backarr2.get(0));
         System.out.println("Get Test num 2 - index exists: Expected: 2"+ " . Function Output:" + backarr2.get(1));
         System.out.println("Get Test num 3 - index exists last: Expected: 1000"+ " . Function Output:" + backarr2.get(9));
-        System.out.println("Get Test num 4 - index doesn't exist: Expected: -1"+ " . Function Output:" +backarr2.get(17));
+        System.out.println("Get Test num 4 - index doesn't exist: Expected: null"+ " . Function Output:" +backarr2.get(17));
 
        //searchTests
         System.out.println("\n\nSearch Tests: \n");
