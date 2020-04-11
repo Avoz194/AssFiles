@@ -1,4 +1,4 @@
-/*public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> {
+public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> {
     private Stack stack;
     private Stack redoStack;
     BacktrackingBST.Node root = null;
@@ -30,7 +30,15 @@
     }
 
     public Node maximum() {
-        // TODO: implement your code here
+        if (root ==null)
+            return null;
+        else{
+            Node max = root;
+            while (max.right!=null){
+                max = max.right;
+            }
+            return max;
+        }
     }
 
     public Node successor(Node x) {     ///Nohaaaa
@@ -38,7 +46,30 @@
     }
 
     public Node predecessor(Node x) {
-        // TODO: implement your code here
+                if(x==null) //if x is null, return null
+            return null;
+        else {
+            Node pre =x.left;
+            if(pre!=null){ //if has a left child - return the maximum value in the subtree of left child (didn't build new subtree to avoid memory waste;
+                while (pre.right!=null){
+                    pre=pre.right;
+                }
+                return pre;
+                /* Alternative solution - build BST based on the pre.left node and run maximum. Seems like it's a waste of space.
+                 BacktrackingBST bsLeft = new BacktrackingBST(new Stack(),new Stack());
+                bsLeft.insert(pre);
+                return bsLeft.maximum();
+                */
+            }
+            else{ //else, return the lowest ancestor of x whose right child is also an ancestor of x.
+                pre = x.parent;
+                while(pre!=null&&pre.left==x){
+                    x=pre;
+                    pre=x.parent;
+                }
+                return pre;
+            }
+        }
     }
 
     @Override
@@ -77,7 +108,6 @@
         public int getKey() {
             return key;
         }
-
         public Object getValue() {
             return value;
         }
@@ -85,4 +115,3 @@
 
 }
 
-*/
