@@ -114,7 +114,7 @@ public class BacktrackingArray implements Array<Integer>, Backtrack {
     }
 
     public void print() {
-        if (currSize == 0) {
+        if (currSize == 0) {  //TODO: Make sure if we need to print empty array
             System.out.println("");
         } else {
             for (int i = 0; i < currSize - 1; i = i + 1) {
