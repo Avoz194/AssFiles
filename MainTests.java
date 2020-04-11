@@ -431,7 +431,7 @@ public class MainTests {
         backarr2.insert(10000);
         System.out.println("Maximum Test num 2 : Expected: 10. Function Output:" + backarr2.maximum());
         //Maximum 3
-        backarr2.insert(10);
+        backarr2.insert(30);
         System.out.println("Maximum Test num 3 : Expected: 11. Function Output:" + backarr2.maximum());
 
         //Predecessor Tests
