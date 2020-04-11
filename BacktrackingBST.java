@@ -27,38 +27,27 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
         Case 2 - x has 1 child;
         Case 3 - x has 2 children;
          */
-        Node xCopy = null;
-        Node y = null;
-        if(x.left!=null & x.right!=null){
-            /*Case 3 part A - xCopy to point on x, x to point on it's predecessor.
-             We'll remove the successor and later place it in x's position in the tree;
-             We'll use Cases 1 or 2 to remove y from the tree.
-             (Please note that in case option 3 is relevant, 'x' parameter in the code for Cases 1 and 2 will actually point on y.)
-             */
-            xCopy=x;
-            y = successor(x);
-            x=y;
+        Node toRemove = x;
+        if(toRemove.left!=null & toRemove.right!=null){
+            /*Case 3 - we'll change x's key and value based on it's successor and remove the successor from the tree.
+             We'll use Cases 1 or 2 to remove y from the tree ('toRemove' variable will point on y - the successor); */
+            Node y = successor(x);
+            x.key=y.key;
+            x.value=y.value;
+            toRemove=y;
         }
-        if (x.left != null | x.right != null) { //Cases 1+2, if both null, 'Child' will remain null and we'll update the parent accordingly
+        if (toRemove.left != null |toRemove.right != null) {
+            //Cases 1+2, if both null, 'Child' will remain null and we'll update the parent accordingly;
             Node Child = null;
-            if (x.left != null) {
-                Child = x.left;
-            } else if (x.right != null) {
-                Child = x.right;
+            if (toRemove.left != null) {
+                Child = toRemove.left;
+            } else if (toRemove.right != null) {
+                Child = toRemove.right;
             }
-            else if(x==root) //in case there is no child and x is the root, set root to null;
+            else if(toRemove==root) //in case there is no child and 'toRemove' is the root, set root to null;
                 root = null;
-            if (x.parent.left == x) x.parent.left = Child;
-            else x.parent.right = Child;
-        }
-        if(xCopy!=null){ //Case 3 part B - Place y to replace x's location in the tree.
-            y.right=xCopy.right;
-            y.left=xCopy.left;
-            if(xCopy.parent!=null){
-                y = xCopy.parent;
-                if(xCopy.parent.right == xCopy) xCopy.parent.right=y;
-                else xCopy.parent.left=y;
-            }
+            if (toRemove.parent.left == toRemove) toRemove.parent.left = Child;
+            else toRemove.parent.right = Child;
         }
     }
 
