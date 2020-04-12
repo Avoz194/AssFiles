@@ -2,11 +2,13 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
     private Stack stack;
     private Stack redoStack;
     BacktrackingBST.Node root = null;
+    private boolean redoDone;
 
     // Do not change the constructor's signature
     public BacktrackingBST(Stack stack, Stack redoStack) {
         this.stack = stack;
         this.redoStack = redoStack;
+        this.redoDone = false;
     }
 
     public Node getRoot() {
@@ -46,7 +48,10 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
             prev.right = z;
         }
         stack.push(new BSTTrackingData(z,null, null,prev,'i'));
-        redoStack.clear();
+        if (!redoDone)
+            redoStack.clear();
+        else
+            redoDone=false;
     }
 
     public void delete(Node x) {
@@ -56,7 +61,10 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
         Case 3 - x has 2 children;
          */
         stack.push(new BSTTrackingData(x,x.left, x.right,x.parent,'d'));
-        redoStack.clear();
+        if (!redoDone)
+            redoStack.clear();
+        else
+            redoDone=false;
         Node toRemove = x;
         if(toRemove.left!=null & toRemove.right!=null){
             /*Case 3 - we'll change x's key and value based on it's successor and remove the successor from the tree.
@@ -153,10 +161,19 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
 
         public void backtrack () {
             // TODO: implement your code here
+
         }
 
         public void retrack () {
-            // TODO: implement your code here
+            if(!redoStack.isEmpty()){
+                BSTTrackingData redoAct = (BSTTrackingData)redoStack.pop();
+                redoDone = true;
+                if(redoAct.getOperation()=='r'){
+                    delete(redoAct.getCurr());
+                }
+                else
+                    insert(redoAct.getCurr());
+            }
         }
 
         public void printPreOrder () {
