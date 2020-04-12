@@ -51,7 +51,6 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
         stack.push(new BSTTrackingData(z, null, null, prev, 'i'));
         if (!redoDone)
             redoStack.clear();
-
         else
             redoDone = false;
     }
@@ -114,90 +113,105 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
         }
     }
 
-    public Node successor(Node x) {
-        if (x == null) //if x is null, return null
-            return null;
-        else {
-            Node succ = x.right;
-            if (succ != null) { //if x has a right child - return the minimum value in the subtree of right child
-                while (succ.left != null) {
-                    succ = succ.left;
-                }
-                return succ;
-            } else {
-                succ = x.parent;
-                while (succ != null && succ.right == x) {
-                    x = succ;
+        public Node successor (Node x) {
+            if (x == null) //if x is null, return null
+                return null;
+            else {
+                Node succ = x.right;
+                if (succ != null) { //if x has a right child - return the minimum value in the subtree of right child
+                    while (succ.left != null) {
+                        succ = succ.left;
+                    }
+                    return succ;
+                } else {
                     succ = x.parent;
+                    while (succ != null && succ.right == x) {
+                        x = succ;
+                        succ = x.parent;
+                    }
+                    return succ;
                 }
-                return succ;
             }
         }
-    }
 
-    public Node predecessor(Node x) {
-        if (x == null) //if x is null, return null
-            return null;
-        else {
-            Node pre = x.left;
-            if (pre != null) { //if has a left child - return the maximum value in the subtree of left child (didn't build new subtree to avoid memory waste);
-                while (pre.right != null) {
-                    pre = pre.right;
-                }
-                return pre;
+        public Node predecessor (Node x){
+            if (x == null) //if x is null, return null
+                return null;
+            else {
+                Node pre = x.left;
+                if (pre != null) { //if has a left child - return the maximum value in the subtree of left child (didn't build new subtree to avoid memory waste);
+                    while (pre.right != null) {
+                        pre = pre.right;
+                    }
+                    return pre;
                 /* Alternative solution - build BST based on the pre.left node and run maximum. Seems like it's a waste of space.
                  BacktrackingBST bsLeft = new BacktrackingBST(new Stack(),new Stack());
                 bsLeft.insert(pre);
                 return bsLeft.maximum();
                 */
-            } else { //else, return the lowest ancestor of x whose right child is also an ancestor of x.
-                pre = x.parent;
-                while (pre != null && pre.left == x) {
-                    x = pre;
+                } else { //else, return the lowest ancestor of x whose right child is also an ancestor of x.
                     pre = x.parent;
+                    while (pre != null && pre.left == x) {
+                        x = pre;
+                        pre = x.parent;
+                    }
+                    return pre;
                 }
-                return pre;
             }
         }
-    }
 
-    public void backtrack() {
-        if (!stack.isEmpty()) {
-            BSTTrackingData last_op = (BSTTrackingData) stack.pop();
-            redoStack.push(last_op); // pushing last_op into redoStack to redo this operation
-            if (last_op.getOperation() == 'i') { // last operation was an insert
-                if (last_op.getParent().right == last_op.getCurr()) { // curr is a right son
-                    last_op.getParent().right = null;
-                } else { // curr is a left son
-                    last_op.getParent().left = null;
-                }
-            } else { // last operation was a delete
+        public void backtrack () {
+            if(!stack.isEmpty()) {
+                BSTTrackingData last_op = (BSTTrackingData) stack.pop();
+                redoStack.push(last_op); // pushing last_op into redoStack to redo this operation
+                if (last_op.getOperation() == 'i') { // last operation was an insert
+                     delete(last_op.getCurr());
+                     stack.pop();
+                     //TODO: redo uptade
+                }else{ // last operation was a delete
                     /*
                      Case 1 - last_op was a leaf - no children;
                      Case 2 - last_op had 1 child;
                      Case 3 - last_op had 2 children;
                    */
-                if ((last_op.getLeft() != null) & (last_op.getRight() != null)) { // Case 3 - last_op had 2 children
-                    Node y = successor(last_op.getCurr());
-                    if (last_op.getParent().key > last_op.getCurr().key) {
-
+                    if((last_op.getLeft() != null) & (last_op.getRight() != null)) { // Case 3 - last_op had 2 children
+                        Node y = successor(last_op.getCurr());
+                        Node temp = y;
+                        y.key = last_op.getCurr().key;
+                        y.value = last_op.getCurr().value;
+                        insert(temp);
+                        stack.pop();
+                        //TODO: redo update
                     }
-
-                }
-
-                if ((last_op.getLeft() == null) & (last_op.getRight() == null)) { // case 1 - last_op was a leaf
-                    if (last_op.getParent().right == last_op.getCurr()) { // curr was a right son
-                        last_op.getParent().right = last_op.getCurr();
-                    } else { // curr was a left son
-                        last_op.getParent().left = last_op.getCurr();
+                    else if((last_op.getLeft() != null) | (last_op.getRight() != null)){ //Case 2 - last_op had 1 child
+                        Node child = null;
+                        boolean isRight = false;
+                        if(last_op.getRight() != null) { // had a right son
+                            child = last_op.getRight();
+                            isRight = true;
+                        }else if(last_op.getLeft() != null){ // had a left son
+                            child = last_op.getLeft();
+                        }
+                        if(last_op.getParent().left == child){ // last_op.getCurr was a left son
+                            last_op.getParent().left = last_op.getCurr();
+                            if(isRight) last_op.getCurr().right = child;
+                            else last_op.getCurr().left = child;
+                        }
+                        else { //last_op.getCurr was a right son
+                            last_op.getParent().right = last_op.getCurr();
+                            if(isRight) last_op.getCurr().right = child;
+                            else last_op.getCurr().left = child;
+                        }
                     }
-                } else if ((last_op.getLeft() == null) || (last_op.getRight() == null)) { //Case 2 - last_op had 1 child
-
+                    if((last_op.getLeft() == null) & (last_op.getRight() == null)){ // case 1 - last_op was a leaf
+                        insert(last_op.getCurr());
+                        stack.pop();
+                        //TODO update redo
+                    }
                 }
+                System.out.println("backtracking performed");
             }
-            System.out.println("backtracking performed");
         }
-    }
 
     public void retrack() {
         if (!redoStack.isEmpty()) {
@@ -260,34 +274,34 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
         printPreOrder2();
     }
 
-    public static class Node {
-        //These fields are public for grading purposes. By coding conventions and best practice they should be private.
-        public BacktrackingBST.Node left;
-        public BacktrackingBST.Node right;
+        public static class Node {
+            //These fields are public for grading purposes. By coding conventions and best practice they should be private.
+            public BacktrackingBST.Node left;
+            public BacktrackingBST.Node right;
 
-        private BacktrackingBST.Node parent;
-        private int key;
-        private Object value;
+            private BacktrackingBST.Node parent;
+            private int key;
+            private Object value;
 
-        public Node(int key, Object value) {
-            this.key = key;
-            this.value = value;
+            public Node(int key, Object value) {
+                this.key = key;
+                this.value = value;
+            }
+
+            public int getKey() {
+                return key;
+            }
+
+            public Object getValue() {
+                return value;
+            }
+
+            public void preOrderPrint() { //New recursive function created to ease the tree's preOrderPrint
+                System.out.print(" " + key);
+                if (left != null) left.preOrderPrint();
+                if (right != null) right.preOrderPrint();
+            }
         }
 
-        public int getKey() {
-            return key;
-        }
 
-        public Object getValue() {
-            return value;
-        }
-
-        public void preOrderPrint() { //New recursive function created to ease the tree's preOrderPrint
-            System.out.print(" " + key);
-            if (left != null) left.preOrderPrint();
-            if (right != null) right.preOrderPrint();
-        }
     }
-
-
-}
