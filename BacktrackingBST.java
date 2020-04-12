@@ -55,7 +55,7 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
             redoDone = false;
     }
 
-    public void delete(Node x) {
+    public void delete(Node x) {    //TODO: Adjust Notes
         /*
         Case 1 - x is a leaf - no children;
         Case 2 - x has 1 child;
@@ -182,74 +182,74 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
         }
     }
 
-        public void backtrack () {
-            if(!stack.isEmpty()) {
-                BSTTrackingData last_op = (BSTTrackingData) stack.pop();
-                redoStack.push(last_op); // pushing last_op into redoStack to redo this operation
-                if (last_op.getOperation() == 'i') { // last operation was an insert
-                    redoDone=true;
-                     delete(last_op.getCurr());
-                     stack.pop();
-                }else{ // last operation was a delete
+    public void backtrack () {
+        if(!stack.isEmpty()) {
+            BSTTrackingData last_op = (BSTTrackingData) stack.pop();
+            redoStack.push(last_op); // pushing last_op into redoStack to redo this operation
+            if (last_op.getOperation() == 'i') { // last operation was an insert
+                redoDone=true;
+                delete(last_op.getCurr());
+                stack.pop();
+            }else{ // last operation was a delete
                     /*
                      Case 1 - last_op was a leaf - no children;
                      Case 2 - last_op had 1 child;
                      Case 3 - last_op had 2 children;
                    */
-                    if((last_op.getParent() == null)){ //this is going to be the new root
-                        root = last_op.getCurr();
-                    }
-                    if((last_op.getLeft() != null) & (last_op.getRight() != null)) { // Case 3 - last_op had 2 children
-                        Node succ = last_op.getLeft().parent;
-                        last_op.getRight().parent = last_op.getCurr();
-                        last_op.getLeft().parent = last_op.getCurr();
-                        if(last_op.getParent() != null){
-                            if(last_op.getParent().getKey() < last_op.getCurr().getKey()){
-                                last_op.getParent().right = last_op.getCurr();
-                            } else {
-                                last_op.getParent().left = last_op.getCurr();
-                            }
-                        }if(last_op.getSuccParent().getKey() < succ.getKey()){ // succ is bigger
-                            last_op.getSuccParent().right = succ;
+                if((last_op.getParent() == null)){ //this is going to be the new root
+                    root = last_op.getCurr();
+                }
+                if((last_op.getLeft() != null) & (last_op.getRight() != null)) { // Case 3 - last_op had 2 children
+                    Node succ = last_op.getLeft().parent;
+                    last_op.getRight().parent = last_op.getCurr();
+                    last_op.getLeft().parent = last_op.getCurr();
+                    if(last_op.getParent() != null){
+                        if(last_op.getParent().getKey() < last_op.getCurr().getKey()){
+                            last_op.getParent().right = last_op.getCurr();
                         } else {
-                            last_op.getSuccParent().left = succ;
-                        } succ.parent = last_op.getSuccParent();
-                    }
-                    else if((last_op.getLeft() != null) | (last_op.getRight() != null)){ //Case 2 - last_op had 1 child
-                        Node child = null;
-                        boolean isRight = false;
-                        if(last_op.getRight() != null) { // had a right son
-                            child = last_op.getRight();
-                            isRight = true;
-                            child.parent = last_op.getCurr();
-                        }else if(last_op.getLeft() != null){ // had a left son
-                            child = last_op.getLeft();
-                            child.parent = last_op.getCurr();
-                        }
-                        if(last_op.getParent().left == child) { // last_op.getCurr was a left son
                             last_op.getParent().left = last_op.getCurr();
-                            if (isRight) last_op.getCurr().right = child;
-                            else last_op.getCurr().left = child;
                         }
-                        else { //last_op.getCurr was a right son
-                            last_op.getParent().right = last_op.getCurr();
-                            if(isRight) last_op.getCurr().right = child;
-                            else last_op.getCurr().left = child;
-                        }
+                    }if(last_op.getSuccParent().getKey() < succ.getKey()){ // succ is bigger
+                        last_op.getSuccParent().right = succ;
+                    } else {
+                        last_op.getSuccParent().left = succ;
+                    } succ.parent = last_op.getSuccParent();
+                }
+                else if((last_op.getLeft() != null) | (last_op.getRight() != null)){ //Case 2 - last_op had 1 child
+                    Node child = null;
+                    boolean isRight = false;
+                    if(last_op.getRight() != null) { // had a right son
+                        child = last_op.getRight();
+                        isRight = true;
+                        child.parent = last_op.getCurr();
+                    }else if(last_op.getLeft() != null){ // had a left son
+                        child = last_op.getLeft();
+                        child.parent = last_op.getCurr();
                     }
-                    if((last_op.getLeft() == null) & (last_op.getRight() == null)){ // case 1 - last_op was a leaf
-
-                        if(last_op.getParent().key > last_op.getCurr().key){ // curr.key is smaller than parent.key
-                            last_op.getParent().left = last_op.getCurr();
-                        } else { // curr.key is bigger than parent.key
-                            last_op.getParent().right = last_op.getCurr();
-                        }
-                        last_op.getCurr().parent = last_op.getParent();
+                    if(last_op.getParent().left == child) { // last_op.getCurr was a left son
+                        last_op.getParent().left = last_op.getCurr();
+                        if (isRight) last_op.getCurr().right = child;
+                        else last_op.getCurr().left = child;
+                    }
+                    else { //last_op.getCurr was a right son
+                        last_op.getParent().right = last_op.getCurr();
+                        if(isRight) last_op.getCurr().right = child;
+                        else last_op.getCurr().left = child;
                     }
                 }
-                System.out.println("backtracking performed");
+                if((last_op.getLeft() == null) & (last_op.getRight() == null)){ // case 1 - last_op was a leaf
+
+                    if(last_op.getParent().key > last_op.getCurr().key){ // curr.key is smaller than parent.key
+                        last_op.getParent().left = last_op.getCurr();
+                    } else { // curr.key is bigger than parent.key
+                        last_op.getParent().right = last_op.getCurr();
+                    }
+                    last_op.getCurr().parent = last_op.getParent();
+                }
             }
+            System.out.println("backtracking performed");
         }
+    }
 
     public void retrack() {
         if (!redoStack.isEmpty()) {
@@ -331,7 +331,7 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
             return value;
         }
 
-        public void preOrderPrint() { //New recursive function created to ease the tree's preOrderPrint
+        private void preOrderPrint() { //New recursive function created to ease the tree's preOrderPrint
             System.out.print(" " + key);
             if (left != null) left.preOrderPrint();
             if (right != null) right.preOrderPrint();
