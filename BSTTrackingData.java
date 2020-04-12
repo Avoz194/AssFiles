@@ -27,7 +27,7 @@ public class BSTTrackingData {
     }
     public BacktrackingBST.Node getParent(){ return parent;}
     public BacktrackingBST.Node getSuccParent(){ return succParent;}
-
     public char getOperation(){ return operation; }
+    public void setSuccParent(BacktrackingBST.Node succParent){ this.succParent=succParent;}
 
 }

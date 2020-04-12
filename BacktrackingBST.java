@@ -61,13 +61,11 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
         Case 2 - x has 1 child;
         Case 3 - x has 2 children;
          */
-        if (x.left != null | x.right != null){
-            stack.push(new BSTTrackingData(x, x.left, x.right, x.parent, null, 'd'));
-            if (!redoDone)
-                redoStack.clear();
-            else
-                redoDone = false;
-        }
+        if (!redoDone)
+            redoStack.clear();
+        else
+            redoDone = false;
+        BSTTrackingData log = new BSTTrackingData(x, x.left, x.right, x.parent, null, 'd');
         Boolean isRoot = x == root;
         Node toRemove = x;
         Node y = null;
@@ -79,21 +77,18 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
              */
             y = successor(x);
             toRemove = y;
-            stack.push(new BSTTrackingData(x, x.left, x.right, x.parent, y.parent, 'd'));
-            if (!redoDone)
-                redoStack.clear();
-            else
-                redoDone = false;
+            log.setSuccParent(y.parent);
         }
+        stack.push(log);
         if (toRemove.left != null | toRemove.right != null) { //Cases 1+2, if both null, 'Child' will remain null and we'll update the parent accordingly
             Node Child = null;
             if (toRemove.left != null) {
                 Child = toRemove.left;
             } else if (toRemove.right != null) {
                 Child = toRemove.right;
-            } else if (toRemove == root &  y==null) //in case there is no child and toRemove is the root, set root to null;
+            } else if (toRemove == root & y == null) //in case there is no child and toRemove is the root, set root to null;
                 root = null;
-            if (isRoot&y==null) {
+            if (isRoot & y == null) {
                 root = Child;
             } else {
                 if (toRemove.parent.left == toRemove) toRemove.parent.left = Child;
@@ -107,12 +102,11 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
             y.left = x.left;
             if (x.left != null)
                 x.left.parent = y;
-            y = x.parent;
+            y.parent = x.parent;
             if (x.parent != null) {
                 if (x.parent.right == x) x.parent.right = y;
                 else x.parent.left = y;
-            }
-            else root=y;
+            } else root = y;
         }
 
     }
