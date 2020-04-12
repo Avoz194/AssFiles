@@ -2,13 +2,13 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
     private Stack stack;
     private Stack redoStack;
     BacktrackingBST.Node root = null;
-    private boolean redoDone;
+    private boolean redoDone;  ///Safetly
 
     // Do not change the constructor's signature
     public BacktrackingBST(Stack stack, Stack redoStack) {
         this.stack = stack;
         this.redoStack = redoStack;
-        this.redoDone = false;
+        this.redoDone = false;  ///Safetly
     }
 
     public Node getRoot() {
@@ -47,11 +47,12 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
         } else {
             prev.right = z;
         }
-        stack.push(new BSTTrackingData(z,null, null,prev,'i'));
-        if (!redoDone)
-            redoStack.clear();
-        else
-            redoDone=false;
+        stack.push(new BSTTrackingData(z,null, null,prev,'i'));   ///Safetly
+        if (!redoDone)   ///Safetly
+            redoStack.clear();   ///Safetly
+        ///Safetly
+        else  ///Safetly
+            redoDone=false;  ///Safetly
     }
 
     public void delete(Node x) {
@@ -61,10 +62,10 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
         Case 3 - x has 2 children;
          */
         stack.push(new BSTTrackingData(x,x.left, x.right,x.parent,'d'));
-        if (!redoDone)
-            redoStack.clear();
-        else
-            redoDone=false;
+        if (!redoDone)  ///Safetly
+            redoStack.clear();  ///Safetly
+        else  ///Safetly
+            redoDone=false;  ///Safetly
         Node toRemove = x;
         if(toRemove.left!=null & toRemove.right!=null){
             /*Case 3 - we'll change x's key and value based on it's successor and remove the successor from the tree.
@@ -164,17 +165,18 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
 
         }
 
-        public void retrack () {
-            if(!redoStack.isEmpty()){
-                BSTTrackingData redoAct = (BSTTrackingData)redoStack.pop();
-                redoDone = true;
-                if(redoAct.getOperation()=='r'){
-                    delete(redoAct.getCurr());
-                }
-                else
-                    insert(redoAct.getCurr());
-            }
-        }
+       ///Safetly  public void retrack () {
+       ///Safetly      if(!redoStack.isEmpty()){
+       ///Safetly          BSTTrackingData redoAct = (BSTTrackingData)redoStack.pop();
+       ///Safetly          redoDone = true;
+       ///Safetly          if(redoAct.getOperation()=='r'){
+       ///Safetly              delete(redoAct.getCurr());
+       ///Safetly          }
+       ///Safetly          else
+       ///Safetly              insert(redoAct.getCurr());
+       ///Safetly
+       ///Safetly      }
+       ///Safetly  }
 
         public void printPreOrder () {
             //We'll print the tree using recursive function created in the node class;
