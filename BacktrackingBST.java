@@ -159,16 +159,14 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
             }
         }
 
-        public void backtrack () { //Safely
+        public void backtrack () {
             if(!stack.isEmpty()) {
                 BSTTrackingData last_op = (BSTTrackingData) stack.pop();
                 redoStack.push(last_op); // pushing last_op into redoStack to redo this operation
                 if (last_op.getOperation() == 'i') { // last operation was an insert
-                    if(last_op.getParent().right == last_op.getCurr()){ // curr is a right son
-                        last_op.getParent().right = null;
-                    } else{ // curr is a left son
-                        last_op.getParent().left = null;
-                    }
+                     delete(last_op.getCurr());
+                     stack.pop();
+                     //TODO: redo uptade
                 }else{ // last operation was a delete
                     /*
                      Case 1 - last_op was a leaf - no children;
@@ -177,20 +175,37 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
                    */
                     if((last_op.getLeft() != null) & (last_op.getRight() != null)) { // Case 3 - last_op had 2 children
                         Node y = successor(last_op.getCurr());
-                        if(last_op.getParent().key > last_op.getCurr().key){
-
-                        }
-
+                        Node temp = y;
+                        y.key = last_op.getCurr().key;
+                        y.value = last_op.getCurr().value;
+                        insert(temp);
+                        stack.pop();
+                        //TODO: redo update
                     }
-
-                    if((last_op.getLeft() == null) & (last_op.getRight() == null)){ // case 1 - last_op was a leaf
-                        if(last_op.getParent().right == last_op.getCurr()){ // curr was a right son
-                            last_op.getParent().right = last_op.getCurr();
-                        }else{ // curr was a left son
-                            last_op.getParent().left = last_op.getCurr();
+                    else if((last_op.getLeft() != null) | (last_op.getRight() != null)){ //Case 2 - last_op had 1 child
+                        Node child = null;
+                        boolean isRight = false;
+                        if(last_op.getRight() != null) { // had a right son
+                            child = last_op.getRight();
+                            isRight = true;
+                        }else if(last_op.getLeft() != null){ // had a left son
+                            child = last_op.getLeft();
                         }
-                    }else if((last_op.getLeft() == null) || (last_op.getRight() == null)){ //Case 2 - last_op had 1 child
-
+                        if(last_op.getParent().left == child){ // last_op.getCurr was a left son
+                            last_op.getParent().left = last_op.getCurr();
+                            if(isRight) last_op.getCurr().right = child;
+                            else last_op.getCurr().left = child;
+                        }
+                        else { //last_op.getCurr was a right son
+                            last_op.getParent().right = last_op.getCurr();
+                            if(isRight) last_op.getCurr().right = child;
+                            else last_op.getCurr().left = child;
+                        }
+                    }
+                    if((last_op.getLeft() == null) & (last_op.getRight() == null)){ // case 1 - last_op was a leaf
+                        insert(last_op.getCurr());
+                        stack.pop();
+                        //TODO update redo
                     }
                 }
                 System.out.println("backtracking performed");
