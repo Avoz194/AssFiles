@@ -48,7 +48,7 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
         } else {
             prev.right = z;
         }
-        stack.push(new BSTTrackingData(z, null, null, prev, 'i'));
+        stack.push(new BSTTrackingData(z, null, null, prev, null, 'i'));
         if (!redoDone)
             redoStack.clear();
         else
@@ -61,32 +61,60 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
         Case 2 - x has 1 child;
         Case 3 - x has 2 children;
          */
-        stack.push(new BSTTrackingData(x, x.left, x.right, x.parent, 'd'));
-        if (!redoDone)
-            redoStack.clear();
-        else
-            redoDone = false;
-        Node toRemove = x;
-        if (toRemove.left != null & toRemove.right != null) {
-            /*Case 3 - we'll change x's key and value based on it's successor and remove the successor from the tree.
-             We'll use Cases 1 or 2 to remove y from the tree ('toRemove' variable will point on y - the successor); */
-            Node y = successor(x);
-            x.key = y.key;
-            x.value = y.value;
-            toRemove = y;
+        if (x.left != null | x.right != null){
+            stack.push(new BSTTrackingData(x, x.left, x.right, x.parent, null, 'd'));
+            if (!redoDone)
+                redoStack.clear();
+            else
+                redoDone = false;
         }
-        if (toRemove.left != null | toRemove.right != null) {
-            //Cases 1+2, if both null, 'Child' will remain null and we'll update the parent accordingly;
+        Boolean isRoot = x == root;
+        Node toRemove = x;
+        Node y = null;
+        if (x.left != null & x.right != null) {
+            /*Case 3 part A - toRemove to point on it's successor.
+             We'll remove the successor and later place it in x's position in the tree;
+             We'll use Cases 1 or 2 to remove the successor from the tree.
+             (Please note that in case option 3 is relevant, 'toRemove' parameter in the code for Cases 1 and 2 will actually point on the successor.)
+             */
+            y = successor(x);
+            toRemove = y;
+            stack.push(new BSTTrackingData(x, x.left, x.right, x.parent, y.parent, 'd'));
+            if (!redoDone)
+                redoStack.clear();
+            else
+                redoDone = false;
+        }
+        if (toRemove.left != null | toRemove.right != null) { //Cases 1+2, if both null, 'Child' will remain null and we'll update the parent accordingly
             Node Child = null;
             if (toRemove.left != null) {
                 Child = toRemove.left;
             } else if (toRemove.right != null) {
                 Child = toRemove.right;
-            } else if (toRemove == root) //in case there is no child and 'toRemove' is the root, set root to null;
+            } else if (toRemove == root &  y==null) //in case there is no child and toRemove is the root, set root to null;
                 root = null;
-            if (toRemove.parent.left == toRemove) toRemove.parent.left = Child;
-            else toRemove.parent.right = Child;
+            if (isRoot&y==null) {
+                root = Child;
+            } else {
+                if (toRemove.parent.left == toRemove) toRemove.parent.left = Child;
+                else toRemove.parent.right = Child;
+            }
         }
+        if (y != null) { //Case 3 part B - Place y to replace x's location in the tree.
+            y.right = x.right;
+            if (x.right != null)
+                x.right.parent = y;
+            y.left = x.left;
+            if (x.left != null)
+                x.left.parent = y;
+            y = x.parent;
+            if (x.parent != null) {
+                if (x.parent.right == x) x.parent.right = y;
+                else x.parent.left = y;
+            }
+            else root=y;
+        }
+
     }
 
     public Node minimum() {
@@ -113,52 +141,52 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
         }
     }
 
-        public Node successor (Node x) {
-            if (x == null) //if x is null, return null
-                return null;
-            else {
-                Node succ = x.right;
-                if (succ != null) { //if x has a right child - return the minimum value in the subtree of right child
-                    while (succ.left != null) {
-                        succ = succ.left;
-                    }
-                    return succ;
-                } else {
-                    succ = x.parent;
-                    while (succ != null && succ.right == x) {
-                        x = succ;
-                        succ = x.parent;
-                    }
-                    return succ;
+    public Node successor(Node x) {
+        if (x == null) //if x is null, return null
+            return null;
+        else {
+            Node succ = x.right;
+            if (succ != null) { //if x has a right child - return the minimum value in the subtree of right child
+                while (succ.left != null) {
+                    succ = succ.left;
                 }
+                return succ;
+            } else {
+                succ = x.parent;
+                while (succ != null && succ.right == x) {
+                    x = succ;
+                    succ = x.parent;
+                }
+                return succ;
             }
         }
+    }
 
-        public Node predecessor (Node x){
-            if (x == null) //if x is null, return null
-                return null;
-            else {
-                Node pre = x.left;
-                if (pre != null) { //if has a left child - return the maximum value in the subtree of left child (didn't build new subtree to avoid memory waste);
-                    while (pre.right != null) {
-                        pre = pre.right;
-                    }
-                    return pre;
+    public Node predecessor(Node x) {
+        if (x == null) //if x is null, return null
+            return null;
+        else {
+            Node pre = x.left;
+            if (pre != null) { //if has a left child - return the maximum value in the subtree of left child (didn't build new subtree to avoid memory waste);
+                while (pre.right != null) {
+                    pre = pre.right;
+                }
+                return pre;
                 /* Alternative solution - build BST based on the pre.left node and run maximum. Seems like it's a waste of space.
                  BacktrackingBST bsLeft = new BacktrackingBST(new Stack(),new Stack());
                 bsLeft.insert(pre);
                 return bsLeft.maximum();
                 */
-                } else { //else, return the lowest ancestor of x whose right child is also an ancestor of x.
+            } else { //else, return the lowest ancestor of x whose right child is also an ancestor of x.
+                pre = x.parent;
+                while (pre != null && pre.left == x) {
+                    x = pre;
                     pre = x.parent;
-                    while (pre != null && pre.left == x) {
-                        x = pre;
-                        pre = x.parent;
-                    }
-                    return pre;
                 }
+                return pre;
             }
         }
+    }
 
         public void backtrack () {
             if(!stack.isEmpty()) {
@@ -233,7 +261,6 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
                 delete(redoAct.getCurr());
             } else
                 insert(redoAct.getCurr());
-
         }
     }
 
@@ -260,20 +287,18 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
             System.out.print(current.key);
             Node pre = null;
             boolean upFromRight = false;
-            while (current!=null){
-                if(pre!=current&current!=root)
-                    System.out.print(" "+current.key);
-                if(current.left!=null&(pre!=current)){
-                  pre=current;
-                  current = current.left;
-                }
-                else if (current.right!=null&!upFromRight){
-                    pre=current;
+            while (current != null) {
+                if (pre != current & current != root)
+                    System.out.print(" " + current.key);
+                if (current.left != null & (pre != current)) {
+                    pre = current;
+                    current = current.left;
+                } else if (current.right != null & !upFromRight) {
+                    pre = current;
                     current = current.right;
-                }
-                else {
-                    if(current==pre.right|(current==pre&upFromRight ==true)) upFromRight = true;
-                    else upFromRight=false;
+                } else {
+                    if (current == pre.right | (current == pre & upFromRight == true)) upFromRight = true;
+                    else upFromRight = false;
                     current = current.parent;
                     pre = current;
                 }
@@ -286,34 +311,34 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
         printPreOrder2();
     }
 
-        public static class Node {
-            //These fields are public for grading purposes. By coding conventions and best practice they should be private.
-            public BacktrackingBST.Node left;
-            public BacktrackingBST.Node right;
+    public static class Node {
+        //These fields are public for grading purposes. By coding conventions and best practice they should be private.
+        public BacktrackingBST.Node left;
+        public BacktrackingBST.Node right;
 
-            private BacktrackingBST.Node parent;
-            private int key;
-            private Object value;
+        private BacktrackingBST.Node parent;
+        private int key;
+        private Object value;
 
-            public Node(int key, Object value) {
-                this.key = key;
-                this.value = value;
-            }
-
-            public int getKey() {
-                return key;
-            }
-
-            public Object getValue() {
-                return value;
-            }
-
-            public void preOrderPrint() { //New recursive function created to ease the tree's preOrderPrint
-                System.out.print(" " + key);
-                if (left != null) left.preOrderPrint();
-                if (right != null) right.preOrderPrint();
-            }
+        public Node(int key, Object value) {
+            this.key = key;
+            this.value = value;
         }
 
+        public int getKey() {
+            return key;
+        }
 
+        public Object getValue() {
+            return value;
+        }
+
+        public void preOrderPrint() { //New recursive function created to ease the tree's preOrderPrint
+            System.out.print(" " + key);
+            if (left != null) left.preOrderPrint();
+            if (right != null) right.preOrderPrint();
+        }
     }
+
+
+}
