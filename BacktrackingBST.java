@@ -202,17 +202,24 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
                      Case 2 - last_op had 1 child;
                      Case 3 - last_op had 2 children;
                    */
-                    if((last_op.getParent() == null) & (last_op.getLeft() == null) & (last_op.getRight() == null)){ //this was a tree with one node
+                    if((last_op.getParent() == null)){ //this is going to be the new root
                         root = last_op.getCurr();
                     }
                     if((last_op.getLeft() != null) & (last_op.getRight() != null)) { // Case 3 - last_op had 2 children
-                        Node y = last_op.getLeft().parent;
-                        Node temp = y;
-                        y.key = last_op.getCurr().key;
-                        y.value = last_op.getCurr().value;
-                        redoDone=true;
-                        insert(temp);
-                        stack.pop();
+                        Node succ = last_op.getLeft().parent;
+                        last_op.getRight().parent = last_op.getCurr();
+                        last_op.getLeft().parent = last_op.getCurr();
+                        if(last_op.getParent() != null){
+                            if(last_op.getParent().getKey() < last_op.getCurr().getKey()){
+                                last_op.getParent().right = last_op.getCurr();
+                            } else {
+                                last_op.getParent().left = last_op.getCurr();
+                            }
+                        }if(last_op.getSuccParent().getKey() < succ.getKey()){ // succ is bigger
+                            last_op.getSuccParent().right = succ;
+                        } else {
+                            last_op.getSuccParent().left = succ;
+                        } succ.parent = last_op.getSuccParent();
                     }
                     else if((last_op.getLeft() != null) | (last_op.getRight() != null)){ //Case 2 - last_op had 1 child
                         Node child = null;
@@ -229,7 +236,6 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
                             last_op.getParent().left = last_op.getCurr();
                             if (isRight) last_op.getCurr().right = child;
                             else last_op.getCurr().left = child;
-
                         }
                         else { //last_op.getCurr was a right son
                             last_op.getParent().right = last_op.getCurr();
@@ -238,15 +244,13 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
                         }
                     }
                     if((last_op.getLeft() == null) & (last_op.getRight() == null)){ // case 1 - last_op was a leaf
-                        redoDone=true;
+
                         if(last_op.getParent().key > last_op.getCurr().key){ // curr.key is smaller than parent.key
                             last_op.getParent().left = last_op.getCurr();
-                            last_op.getCurr().parent = last_op.getParent();
                         } else { // curr.key is bigger than parent.key
                             last_op.getParent().right = last_op.getCurr();
-                            last_op.getCurr().parent = last_op.getParent();
                         }
-                        stack.pop();
+                        last_op.getCurr().parent = last_op.getParent();
                     }
                 }
                 System.out.println("backtracking performed");
