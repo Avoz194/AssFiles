@@ -13,15 +13,17 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
         return root;
     }
 
-    public Node search(int x) { //TODO: maybe add curr!=0 (while). prob not necessary
+    public Node search(int x) {
         Node curr = root;
-        while(curr.key != x){
+        while((curr!=null) && (curr.key != x)){
             if(x < curr.key){ // the requested node is in the left sub tree
                 curr = curr.left;
             }else{
                 curr = curr.right;
             }
         }
+        if (curr == null)
+            return null;
         return curr;
     }
 
@@ -43,6 +45,8 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
         } else {
             prev.right = z;
         }
+        stack.push(new BSTTrackingData(z,null, null,prev,'i'));
+        redoStack.clear();
     }
 
     public void delete(Node x) {
@@ -51,6 +55,8 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
         Case 2 - x has 1 child;
         Case 3 - x has 2 children;
          */
+        stack.push(new BSTTrackingData(x,x.left, x.right,x.parent,'d'));
+        redoStack.clear();
         Node toRemove = x;
         if(toRemove.left!=null & toRemove.right!=null){
             /*Case 3 - we'll change x's key and value based on it's successor and remove the successor from the tree.
