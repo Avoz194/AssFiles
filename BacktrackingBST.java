@@ -204,12 +204,12 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
                         last_op.getRight().parent = last_op.getCurr();
                         last_op.getLeft().parent = last_op.getCurr();
                         if(last_op.getParent() != null){
-                            if(last_op.getParent().getKey() < last_op.getCurr().getKey()){
+                            if(last_op.getParent().getKey() < last_op.getCurr().getKey()){ //updating location of curr in relation to parent
                                 last_op.getParent().right = last_op.getCurr();
                             } else {
                                 last_op.getParent().left = last_op.getCurr();
                             }
-                        }if(last_op.getSuccParent().getKey() < succ.getKey()){ // succ is bigger
+                        }if(last_op.getSuccParent().getKey() < succ.getKey()){ // updating location of succ in relation to succParent
                             last_op.getSuccParent().right = succ;
                         } else {
                             last_op.getSuccParent().left = succ;
@@ -217,7 +217,7 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
                     }
                     else if((last_op.getLeft() != null) | (last_op.getRight() != null)){ //Case 2 - last_op had 1 child
                         Node child = null;
-                        boolean isRight = false;
+                        boolean isRight = false; // marks if child is a right son or not.
                         if(last_op.getRight() != null) { // had a right son
                             child = last_op.getRight();
                             isRight = true;
@@ -239,7 +239,7 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
                     }
                     if((last_op.getLeft() == null) & (last_op.getRight() == null)){ // case 1 - last_op was a leaf
 
-                        if(last_op.getParent().key > last_op.getCurr().key){ // curr.key is smaller than parent.key
+                        if(last_op.getParent().getKey() > last_op.getCurr().getKey()){ // curr.key is smaller than parent.key
                             last_op.getParent().left = last_op.getCurr();
                         } else { // curr.key is bigger than parent.key
                             last_op.getParent().right = last_op.getCurr();
