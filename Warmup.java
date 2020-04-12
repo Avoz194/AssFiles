@@ -25,11 +25,11 @@ public class Warmup {
         int first = 0;
         int last = arr.length - 1;
         while (first <= last) {
-            int reDo = isConsistent(arr);
-            while (reDo > 0&!myStack.isEmpty()) {
+            int undo = isConsistent(arr);
+            while (undo > 0&!myStack.isEmpty()) {
                 last = (int) myStack.pop();
                 first = (int) myStack.pop();
-                reDo = reDo - 1;
+                undo = undo - 1;
             }
             int mid = (last + first) / 2;
             if (arr[mid] == x)
