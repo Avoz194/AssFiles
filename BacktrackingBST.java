@@ -165,9 +165,9 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
                 BSTTrackingData last_op = (BSTTrackingData) stack.pop();
                 redoStack.push(last_op); // pushing last_op into redoStack to redo this operation
                 if (last_op.getOperation() == 'i') { // last operation was an insert
+                    redoDone=true;
                      delete(last_op.getCurr());
                      stack.pop();
-                     //TODO: redo uptade
                 }else{ // last operation was a delete
                     /*
                      Case 1 - last_op was a leaf - no children;
@@ -179,9 +179,9 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
                         Node temp = y;
                         y.key = last_op.getCurr().key;
                         y.value = last_op.getCurr().value;
+                        redoDone=true;
                         insert(temp);
                         stack.pop();
-                        //TODO: redo update
                     }
                     else if((last_op.getLeft() != null) | (last_op.getRight() != null)){ //Case 2 - last_op had 1 child
                         Node child = null;
@@ -204,9 +204,9 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
                         }
                     }
                     if((last_op.getLeft() == null) & (last_op.getRight() == null)){ // case 1 - last_op was a leaf
+                        redoDone=true;
                         insert(last_op.getCurr());
                         stack.pop();
-                        //TODO update redo
                     }
                 }
                 System.out.println("backtracking performed");
