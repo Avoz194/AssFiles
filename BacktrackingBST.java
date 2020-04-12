@@ -55,7 +55,7 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
             redoDone = false;
     }
 
-    public void delete(Node x) {
+    public void delete(Node x) {    //TODO: Adjust Notes
         /*
         Case 1 - x is a leaf - no children;
         Case 2 - x has 1 child;
@@ -331,7 +331,7 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
             return value;
         }
 
-        public void preOrderPrint() { //New recursive function created to ease the tree's preOrderPrint
+        private void preOrderPrint() { //New recursive function created to ease the tree's preOrderPrint
             System.out.print(" " + key);
             if (left != null) left.preOrderPrint();
             if (right != null) right.preOrderPrint();
