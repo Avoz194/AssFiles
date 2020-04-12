@@ -252,6 +252,7 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
                     pre = current;
                 }
             }
+            System.out.println();
         }
     }
 
