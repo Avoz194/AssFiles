@@ -151,7 +151,7 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
             }
         }
 
-        public void backtrack () {
+        public void backtrack () { //Safely
             if(!stack.isEmpty()) {
                 BSTTrackingData last_op = (BSTTrackingData) stack.pop();
                 redoStack.push(last_op); // pushing last_op into redoStack to redo this operation
