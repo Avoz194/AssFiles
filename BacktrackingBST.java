@@ -160,9 +160,42 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
             }
         }
 
-        public void backtrack () {
-            // TODO: implement your code here
+        public void backtrack () { //Safely
+            if(!stack.isEmpty()) {
+                BSTTrackingData last_op = (BSTTrackingData) stack.pop();
+                redoStack.push(last_op); // pushing last_op into redoStack to redo this operation
+                if (last_op.getOperation() == 'i') { // last operation was an insert
+                    if(last_op.getParent().right == last_op.getCurr()){ // curr is a right son
+                        last_op.getParent().right = null;
+                    } else{ // curr is a left son
+                        last_op.getParent().left = null;
+                    }
+                }else{ // last operation was a delete
+                    /*
+                     Case 1 - last_op was a leaf - no children;
+                     Case 2 - last_op had 1 child;
+                     Case 3 - last_op had 2 children;
+                   */
+                    if((last_op.getLeft() != null) & (last_op.getRight() != null)) { // Case 3 - last_op had 2 children
+                        Node y = successor(last_op.getCurr());
+                        if(last_op.getParent().key > last_op.getCurr().key){
 
+                        }
+
+                    }
+
+                    if((last_op.getLeft() == null) & (last_op.getRight() == null)){ // case 1 - last_op was a leaf
+                        if(last_op.getParent().right == last_op.getCurr()){ // curr was a right son
+                            last_op.getParent().right = last_op.getCurr();
+                        }else{ // curr was a left son
+                            last_op.getParent().left = last_op.getCurr();
+                        }
+                    }else if((last_op.getLeft() == null) || (last_op.getRight() == null)){ //Case 2 - last_op had 1 child
+
+                    }
+                }
+                System.out.println("backtracking performed");
+            }
         }
 
        ///Safetly  public void retrack () {
