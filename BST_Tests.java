@@ -65,30 +65,7 @@ public class BST_Tests {
 
 
 
-        // BACKTRACK test
-        System.out.println("--------------BACKTRACK test:-----------------");
-        System.out.println();
-        System.out.println("before:");
-        bst.print();
-        System.out.println();
-        bst.insert(new BacktrackingBST.Node(70, null));
-        System.out.println("insert 70:");
-        bst.print();
-        System.out.println("after backtrack:");
-        bst.backtrack();
-        bst.print();
-        System.out.println("insert 80:");
-        bst.insert(new BacktrackingBST.Node(80, null));
-        bst.print();
-        System.out.println("after backtrack:");
-        bst.backtrack();
-        bst.print();
-        System.out.println("delete 1:");
-        bst.delete(n1);
-        bst.print();
-        System.out.println("after backtrack:");
-       // bst.backtrack(); //TODO; FUCKKKKKKKKKKK
-        bst.print();
+
 
 
 
@@ -164,6 +141,31 @@ public class BST_Tests {
         System.out.print("minimum bst expected : 3    received :");
         System.out.println(bst1.minimum().getKey());
         System.out.println();
+
+        // BACKTRACK test
+        System.out.println("--------------BACKTRACK test:-----------------");
+        System.out.println();
+        System.out.println("before:");
+        bst.print();
+        System.out.println();
+        bst.insert(new BacktrackingBST.Node(70, null));
+        System.out.println("insert 70:");
+        bst.print();
+        System.out.println("after backtrack:");
+        bst.backtrack();
+        bst.print();
+        System.out.println("insert 80:");
+        bst.insert(new BacktrackingBST.Node(80, null));
+        bst.print();
+        System.out.println("after backtrack:");
+        bst.backtrack();
+        bst.print();
+        System.out.println("delete 6:");
+        bst.delete(n6);
+        bst.print();
+        System.out.println("after backtrack:");
+          bst.backtrack(); //TODO; FUCKKKKKKKKKKK
+        bst.print();
 
 
         //Delete Tests
