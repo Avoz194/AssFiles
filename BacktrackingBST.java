@@ -348,9 +348,11 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
                     pre = current;
                     current = current.right;
                 } else {
-                    if (current == pre.right | (current == pre & upFromRight == true)) upFromRight = true;
-                    else upFromRight = false;
+                    pre=current;
                     current = current.parent;
+                    if(current!=null&&current.right==pre)
+                        upFromRight=true;
+                    else upFromRight = false;
                     pre = current;
                 }
             }
