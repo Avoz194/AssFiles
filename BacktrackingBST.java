@@ -210,20 +210,20 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
             Node bktSuccParent = last_op.getSuccParent();
             char bktOperation = last_op.getOperation();
 
-            if(bktOperation == 'd') { // last operation was a delete
+            if (bktOperation == 'd') { // last operation was a delete
                 /*
                 find successor
                 if curr was root - update root (both sides)
                 reconnect parent and curr (both sides)
                */
                 Node succ = null;
-                if(bktSuccParent!=null)
+                if (bktSuccParent != null)
                     succ = bktLeft.parent;
                 if ((bktParent == null)) { //curr was root
                     root = bktCurr;
                     bktCurr.parent = null;
-                } else{ // reconnect curr with parent
-                     if (bktParent.getKey() > bktCurr.getKey()) { // checking if curr was right or left son
+                } else { // reconnect curr with parent
+                    if (bktParent.getKey() > bktCurr.getKey()) { // checking if curr was right or left son
                         bktParent.left = bktCurr;
                     } else { // bktCurr was right son
                         bktParent.right = bktCurr;
@@ -240,7 +240,8 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
                     if (bktRight != null) { // curr had a right son
                         bktRight.parent = bktCurr;
                         bktCurr.right = bktRight;
-                    }if (bktLeft != null) { // curr had a left son
+                    }
+                    if (bktLeft != null) { // curr had a left son
                         bktLeft.parent = bktCurr;
                         bktCurr.left = bktLeft;
                     }
@@ -252,14 +253,32 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
                     place successor under it's succParent
                     */
                     if (bktSuccParent.getKey() < succ.getKey()) { // reconnecting succ to it's parent
+                        if (bktSuccParent.right != null & bktSuccParent.right != succ) { //if the father had a different son
+                            if (bktSuccParent.right.getKey() > succ.getKey()) {
+                                succ.right = bktSuccParent.right;
+                            } else {
+                                succ.left = bktSuccParent.right;
+                            }
+                            bktSuccParent.right.parent = succ;
+                        }
                         bktSuccParent.right = succ;
                     } else {
+                        if (bktSuccParent.left != null & bktSuccParent.left != succ) { //if the father had a different son
+                            if (bktSuccParent.left.getKey() > succ.getKey()) {
+                                succ.right = bktSuccParent.left;
+                            } else {
+                                succ.left = bktSuccParent.left;
+                            }
+                            bktSuccParent.left.parent = succ;
+                        }
                         bktSuccParent.left = succ;
                     }
                     succ.parent = bktSuccParent;
+                    //Remove successor's left child (as couldn't have one before)
+                    if (succ.left != null)
+                        succ.left = null;  //TODO: in case successor's father had
                 }
-            }
-            else { // last operation was an insert
+            } else { // last operation was an insert
                 deleteUpToChild(bktCurr); // delete bktCurr - case 1
             }
             System.out.println("backtracking performed");
@@ -351,10 +370,10 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
                     pre = current;
                     current = current.right;
                 } else {
-                    pre=current;
+                    pre = current;
                     current = current.parent;
-                    if(current!=null&&current.right==pre)
-                        upFromRight=true;
+                    if (current != null && current.right == pre)
+                        upFromRight = true;
                     else upFromRight = false;
                     pre = current;
                 }
