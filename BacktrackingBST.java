@@ -3,6 +3,7 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
     private Stack redoStack;
     BacktrackingBST.Node root = null;
     private boolean redoDone;
+    private  BacktrackingBST.Node redoSucc =null;
 
     // Do not change the constructor's signature
     public BacktrackingBST(Stack stack, Stack redoStack) {
@@ -49,10 +50,7 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
             prev.right = z;
         }
         stack.push(new BSTTrackingData(z, null, null, prev, null, 'i'));
-        if (!redoDone)
-            redoStack.clear();
-        else
-            redoDone = false;
+        redoStack.clear();
     }
 
     public void deleteUpToChild(Node toRemove) {
@@ -77,41 +75,52 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
             }
         }
     }
-
+    public Node successorForDelete(Node x){//Side function to get the successor, making sure that in cases of retrack, we won't calculate it again
+        if (redoSucc==null)
+            return successor(x);
+        else {
+            Node succ = redoSucc;
+            redoSucc=null;
+            return succ;
+        }
+    }
     public void delete(Node x) {
         /* split delete function into 2 functions:
         - delete main function - choose relevant node to delete based on 0-2 children of x:
             if 0 or 1 children, call  deleteUpToChild to remove x
             if 2 children, look for successor, remove it from tree (using deleteUpToChild) and place it in X's place in the tree
          */
-        redoStack.clear();
+        if (!redoDone)
+            redoStack.clear();
+        else
+            redoDone = false;
         BSTTrackingData log = new BSTTrackingData(x, x.left, x.right, x.parent, null, 'd');
         Boolean isRoot = x == root;
         Node toRemove = x;
-        Node y = null;
+        Node succ = null;
         if (x.left != null & x.right != null) { //if Case 3 - PartA change toRemove to the successor and remove it from the tree
-            y = successor(x);
-            toRemove = y;
-            log.setSuccParent(y.parent); //update log accordingly
+            succ = successorForDelete(x); //use side function to get the successor (adjusted to improve retrack actions)
+            toRemove = succ;
+            log.setSuccParent(succ.parent); //update log accordingly
         }
         stack.push(log);
         deleteUpToChild(toRemove); //function to handle removal of node with up to 1 child.
-        if (y != null) { //Case 3 part B - Place the successor in x's location in the tree.
+        if (succ != null) { //Case 3 part B - Place the successor in x's location in the tree.
             //update parent
-            y.parent = x.parent;
+            succ.parent = x.parent;
             if (isRoot) {
-                root = y;
+                root = succ;
             } else {
-                if (x.parent.right == x) x.parent.right = y;
-                else x.parent.left = y;
+                if (x.parent.right == x) x.parent.right = succ;
+                else x.parent.left = succ;
             }
             //update both childs
-            y.right = x.right;
+            succ.right = x.right;
             if (x.right != null)
-                x.right.parent = y;
-            y.left = x.left;
+                x.right.parent = succ;
+            succ.left = x.left;
             if (x.left != null)
-                x.left.parent = y;
+                x.left.parent = succ;
         }
 
     }
@@ -259,11 +268,8 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
     public void retrack() {
         if (!redoStack.isEmpty()) {
             BSTTrackingData redoOp = (BSTTrackingData) redoStack.pop();
-            redoDone = true;
             Node reParent = redoOp.getParent();
             Node reCurr = redoOp.getCurr();
-            Node reLeft = redoOp.getLeft();
-            Node reRight = redoOp.getRight();
 
             //manually redo operation of *insert*, manually and leave log. Avoid using Insert function to avoid unnecessary runtime
             if (redoOp.getOperation() == 'i') {
@@ -276,47 +282,32 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
                 stack.push(redoOp);
             }
 
-            /*manually redo operation of delete, replace the 'core' of the delete function to avoid search for successor
-            use deleteUpToChild function to remove relevant node from tree.
+            /*redo delete operation.
+            We've adjusted the delete function (Case 3), not to search for the successor (using successor function)
+            in case we've committed a retrack.
+            We'll calculate the successor based on the log's details, and update the class' field accordingly, avoiding
+            unnecessary runtime (making the delete operation for retrack purpose O(1));
             */
             else {
-                Boolean isRoot = reParent == null;
-                Node toRemove = reCurr;
-                Node succ = null;
-                if (reLeft != null & reRight != null) { //if Case 3 - PartA change toRemove to the successor and remove it from the tree
+                Node reLeft = redoOp.getLeft();
+                Node reRight = redoOp.getRight();
+                if (reLeft != null & reRight != null) {
                     Node succParent = redoOp.getSuccParent();
                     //figure out which of it's child is the successor based on key comparision with curr;
-                    if (succParent.right == null) succ = succParent.left;
-                    else if (succParent.left == null) succ = succParent.right;
+                    if (succParent.right == null) redoSucc = succParent.left;
+                    else if (succParent.left == null) redoSucc = succParent.right;
                     else {
                         if (succParent.left.key > succParent.right.key) {
-                            if (succParent.right.key > reCurr.key) succ = succParent.right;
-                            else succ = succParent.left;
+                            if (succParent.right.key > reCurr.key) redoSucc = succParent.right;
+                            else redoSucc = succParent.left;
                         } else {
-                            if (succParent.left.key > reCurr.key) succ = succParent.left;
-                            else succ = succParent.right;
+                            if (succParent.left.key > reCurr.key) redoSucc = succParent.left;
+                            else redoSucc = succParent.right;
                         }
                     }
-                    toRemove = succ;
                 }
-                deleteUpToChild(toRemove); //function to handle removal of node with up to 1 child.
-                if (succ != null) { //Case 3 part B - Place the successor in x's location in the tree.
-                    //update parent
-                    succ.parent = x.parent;
-                    if (isRoot) {
-                        root = succ;
-                    } else {
-                        if (x.parent.right == x) x.parent.right = succ;
-                        else x.parent.left = succ;
-                    }
-                    //update both childs
-                    succ.right = x.right;
-                    if (x.right != null)
-                        x.right.parent = succ;
-                    succ.left = x.left;
-                    if (x.left != null)
-                        x.left.parent = succ;
-                }
+                redoDone = true;
+                delete(reCurr); //use the delete function for the removal.
             }
 
         }
