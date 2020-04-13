@@ -191,66 +191,62 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
         if (!stack.isEmpty()) {
             BSTTrackingData last_op = (BSTTrackingData) stack.pop();
             redoStack.push(last_op); // pushing last_op into redoStack to redo this operation
-            if (last_op.getOperation() == 'i') { // last operation was an insert
-                redoDone = true;
-                delete(last_op.getCurr());
-                stack.pop();
-            } else { // last operation was a delete
-                    /*
-                     Case 1 - last_op was a leaf - no children;
-                     Case 2 - last_op had 1 child;
-                     Case 3 - last_op had 2 children;
-                   */
-                if ((last_op.getParent() == null)) { //this is going to be the new root
-                    root = last_op.getCurr();
-                }
-                if ((last_op.getLeft() != null) & (last_op.getRight() != null)) { // Case 3 - last_op had 2 children
-                    Node succ = last_op.getLeft().parent;
-                    last_op.getRight().parent = last_op.getCurr();
-                    last_op.getLeft().parent = last_op.getCurr();
-                    if (last_op.getParent() != null) {
-                        if (last_op.getParent().getKey() < last_op.getCurr().getKey()) { //updating location of curr in relation to parent
-                            last_op.getParent().right = last_op.getCurr();
-                        } else {
-                            last_op.getParent().left = last_op.getCurr();
-                        }
-                    }
-                    if (last_op.getSuccParent().getKey() < succ.getKey()) { // updating location of succ in relation to succParent
-                        last_op.getSuccParent().right = succ;
-                    } else {
-                        last_op.getSuccParent().left = succ;
-                    }
-                    succ.parent = last_op.getSuccParent();
-                } else if ((last_op.getLeft() != null) | (last_op.getRight() != null)) { //Case 2 - last_op had 1 child
-                    Node child = null;
-                    boolean isRight = false; // marks if child is a right son or not.
-                    if (last_op.getRight() != null) { // had a right son
-                        child = last_op.getRight();
-                        isRight = true;
-                        child.parent = last_op.getCurr();
-                    } else if (last_op.getLeft() != null) { // had a left son
-                        child = last_op.getLeft();
-                        child.parent = last_op.getCurr();
-                    }
-                    if (last_op.getParent().left == child) { // last_op.getCurr was a left son
-                        last_op.getParent().left = last_op.getCurr();
-                        if (isRight) last_op.getCurr().right = child;
-                        else last_op.getCurr().left = child;
-                    } else { //last_op.getCurr was a right son
-                        last_op.getParent().right = last_op.getCurr();
-                        if (isRight) last_op.getCurr().right = child;
-                        else last_op.getCurr().left = child;
-                    }
-                }
-                if ((last_op.getLeft() == null) & (last_op.getRight() == null)) { // case 1 - last_op was a leaf
+            Node bktCurr = last_op.getCurr();
+            Node bktLeft = last_op.getLeft();
+            Node bktRight = last_op.getRight();
+            Node bktParent = last_op.getParent();
+            Node bktSuccParent = last_op.getSuccParent();
+            char bktOperation = last_op.getOperation();
 
-                    if (last_op.getParent().getKey() > last_op.getCurr().getKey()) { // curr.key is smaller than parent.key
-                        last_op.getParent().left = last_op.getCurr();
-                    } else { // curr.key is bigger than parent.key
-                        last_op.getParent().right = last_op.getCurr();
+            if(bktOperation == 'd') { // last operation was a delete
+                /*
+                find successor
+                if curr was root - update root (both sides)
+                reconnect parent and curr (both sides)
+               */
+                Node succ = bktLeft.parent;
+                if ((bktParent == null)) { //curr was root
+                    root = bktCurr;
+                    bktCurr.parent = null;
+                } else{ // reconnect curr with parent
+                     if (bktParent.getKey() > bktCurr.getKey()) { // checking if curr was right or left son
+                        bktParent.left = bktCurr;
+                    } else { // bktCurr was right son
+                        bktParent.right = bktCurr;
                     }
-                    last_op.getCurr().parent = last_op.getParent();
+                    bktCurr.parent = bktParent; //reconnect parent with curr
                 }
+
+
+                if ((bktLeft != null) | (bktRight != null)) {
+                 /*
+                 Case 2 + 3
+                 reconnect curr and child/children (both sides)
+                 */
+                    if (bktRight != null) { // curr had a right son
+                        bktRight.parent = bktCurr;
+                        bktCurr.right = bktRight;
+                    }if (bktLeft != null) { // curr had a left son
+                        bktLeft.parent = bktCurr;
+                        bktCurr.left = bktLeft;
+                    }
+                }
+
+                if ((bktLeft != null) & (bktRight != null)) {
+                    /*
+                    Case 3 - curr had 2 children
+                    place successor under it's succParent
+                    */
+                    if (bktSuccParent.getKey() < succ.getKey()) { // reconnecting succ to it's parent
+                        bktSuccParent.right = succ;
+                    } else {
+                        bktSuccParent.left = succ;
+                    }
+                    succ.parent = bktSuccParent;
+                }
+            }
+            else { // last operation was an insert
+                deleteUpToChild(bktCurr); // delete bktCurr - case 1
             }
             System.out.println("backtracking performed");
         }
