@@ -55,59 +55,58 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
             redoDone = false;
     }
 
-    public void deleteUpToChild(Node toRemove) {
-        //Cases 1+2, if both null, 'child' will remain null and we'll update the parent accordingly
-        Boolean isRoot = toRemove == root;
-        Node child = null;
-        //find 1 child if exist
-        if (toRemove.left != null) {
-            child = toRemove.left;
-        } else if (toRemove.right != null) {
-            child = toRemove.right;
-        }
-        if (isRoot) {  //in case toRemove is the root, set root to child (even if null);
-            root = child;
-            if(child!=null) child.parent = null;
-        } else { //if not root, set parent's relevant son to 'child' (both directions)
-            if (toRemove.parent.left == toRemove) {
-                toRemove.parent.left = child;
-            }
-            else toRemove.parent.right = child;
-            if(child!=null){
-                child.parent = toRemove.parent;
-            }
-        }
-    }
     public void delete(Node x) {    //TODO: Adjust Notes
-        redoStack.clear();
+        /*
+        Case 1 - x is a leaf - no children;
+        Case 2 - x has 1 child;
+        Case 3 - x has 2 children;
+         */
+        if (!redoDone)
+            redoStack.clear();
+        else
+            redoDone = false;
         BSTTrackingData log = new BSTTrackingData(x, x.left, x.right, x.parent, null, 'd');
         Boolean isRoot = x == root;
         Node toRemove = x;
         Node y = null;
-        if (x.left != null & x.right != null) { //if Case 3 - PartA change toRemove to the successor and remove it from the tree
+        if (x.left != null & x.right != null) {
+            /*Case 3 part A - toRemove to point on it's successor.
+             We'll remove the successor and later place it in x's position in the tree;
+             We'll use Cases 1 or 2 to remove the successor from the tree.
+             (Please note that in case option 3 is relevant, 'toRemove' parameter in the code for Cases 1 and 2 will actually point on the successor.)
+             */
             y = successor(x);
             toRemove = y;
-            log.setSuccParent(y.parent); //update log accordingly
+            log.setSuccParent(y.parent);
         }
         stack.push(log);
-        deleteUpToChild(toRemove); //function to handle removal of node with up to 1 child.
-        if (y != null) { //Case 3 part B - Place the successor in x's location in the tree.
-            //update parent
-            y.parent=x.parent;
-            if(isRoot) {
-                root=y;
+        if (toRemove.left != null | toRemove.right != null) { //Cases 1+2, if both null, 'Child' will remain null and we'll update the parent accordingly
+            Node Child = null;
+            if (toRemove.left != null) {
+                Child = toRemove.left;
+            } else if (toRemove.right != null) {
+                Child = toRemove.right;
+            } else if (toRemove == root & y == null) //in case there is no child and toRemove is the root, set root to null;
+                root = null;
+            if (isRoot & y == null) {
+                root = Child;
+            } else {
+                if (toRemove.parent.left == toRemove) toRemove.parent.left = Child;
+                else toRemove.parent.right = Child;
             }
-            else {
-                if (x.parent.right == x) x.parent.right = y;
-                else x.parent.left = y;
-            }
-            //update both childs
+        }
+        if (y != null) { //Case 3 part B - Place y to replace x's location in the tree.
             y.right = x.right;
             if (x.right != null)
                 x.right.parent = y;
             y.left = x.left;
             if (x.left != null)
                 x.left.parent = y;
+            y.parent = x.parent;
+            if (x.parent != null) {
+                if (x.parent.right == x) x.parent.right = y;
+                else x.parent.left = y;
+            } else root = y;
         }
 
     }
@@ -189,7 +188,7 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
             redoStack.push(last_op); // pushing last_op into redoStack to redo this operation
             if (last_op.getOperation() == 'i') { // last operation was an insert
                 redoDone = true;
-                delete(last_op.getCurr());
+                delete(last_op.getCurr()); //TODO: call delete 2
                 stack.pop();
             } else { // last operation was a delete
                     /*
@@ -202,9 +201,9 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
                 }
                 if ((last_op.getLeft() != null) & (last_op.getRight() != null)) { // Case 3 - last_op had 2 children
                     Node succ = last_op.getLeft().parent;
-                    last_op.getRight().parent = last_op.getCurr();
+                    last_op.getRight().parent = last_op.getCurr(); // replace succ and self . update to kids- im the father
                     last_op.getLeft().parent = last_op.getCurr();
-                    if (last_op.getParent() != null) {
+                    if (last_op.getParent() != null) { // check if was root. enter update here instead of 6 above)
                         if (last_op.getParent().getKey() < last_op.getCurr().getKey()) { //updating location of curr in relation to parent
                             last_op.getParent().right = last_op.getCurr();
                         } else {
@@ -254,25 +253,12 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
 
     public void retrack() {
         if (!redoStack.isEmpty()) {
-            BSTTrackingData redoOp = (BSTTrackingData) redoStack.pop();
+            BSTTrackingData redoAct = (BSTTrackingData) redoStack.pop();
             redoDone = true;
-            Node reParent = redoOp.getParent();
-            Node reCurr = redoOp.getCurr();
-
-            //manually redo operation of *insert*, manually and leave log. Avoid using Insert function to avoid unnecessary runtime
-            if (redoOp.getOperation() == 'i') {
-                reCurr.parent = reParent;
-                if (reParent.getKey() > reCurr.getKey()) {
-                    reParent.left = reCurr;
-                } else {
-                    reParent.right = reCurr;
-                }
-                stack.push(redoOp);
-            }
-
-            //manually redo operation of delete, use
-            else
-                delete(redoOp.getCurr());
+            if (redoAct.getOperation() == 'r') {
+                delete(redoAct.getCurr());
+            } else
+                insert(redoAct.getCurr());
         }
     }
 
