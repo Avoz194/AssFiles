@@ -154,6 +154,7 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
     public Node successor(Node x) {
         if (x == null) //if x is null, return null
             return null;
+
         else {
             Node succ = x.right;
             if (succ != null) { //if x has a right child - return the minimum value in the subtree of right child
@@ -173,7 +174,7 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
     }
 
     public Node predecessor(Node x) {
-        if (x == null) //if x is null, return null
+        if (x == null)  //if x is null, return null
             return null;
         else {
             Node pre = x.left;
@@ -363,7 +364,7 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
     }
 
     public void print() {
-        printPreOrder2();
+        printPreOrder();
     }
 
     public static class Node {
