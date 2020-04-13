@@ -53,7 +53,7 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
         redoStack.clear();
     }
 
-    public void deleteUpToChild(Node toRemove) {
+    private void deleteUpToChild(Node toRemove) {
         //Cases 1+2, if both null, 'child' will remain null and we'll update the parent accordingly
         Boolean isRoot = toRemove == root;
         Node child = null;
@@ -76,7 +76,7 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
         }
     }
 
-    public Node successorForDelete(Node x) {//Side function to get the successor, making sure that in cases of retrack, we won't calculate it again
+    private Node successorForDelete(Node x) {//Side function to get the successor, making sure that in cases of retrack, we won't calculate it again
         if (redoSucc == null)
             return successor(x);
         else {
