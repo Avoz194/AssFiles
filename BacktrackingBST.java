@@ -215,7 +215,9 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
                 if curr was root - update root (both sides)
                 reconnect parent and curr (both sides)
                */
-                Node succ = bktLeft.parent;
+                Node succ = null;
+                if(bktSuccParent!=null)
+                    succ = bktLeft.parent;
                 if ((bktParent == null)) { //curr was root
                     root = bktCurr;
                     bktCurr.parent = null;
