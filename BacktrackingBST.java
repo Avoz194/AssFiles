@@ -35,7 +35,6 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
         Node curr = root;
         z.right=null;
         z.left=null;
-        z.parent=null;
         while (curr != null) {
             prev = curr;
             if (z.key < curr.key) {
