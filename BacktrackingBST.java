@@ -253,17 +253,19 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
                     place successor under it's succParent
                     */
                     if (bktSuccParent.getKey() < succ.getKey()) { // reconnecting succ to it's parent
-                        //if the succesor originally had a right son (couldn't have had a left one or it would have been the successor itself)
-                        if (bktSuccParent.right != null & bktSuccParent.right != succ) {
-                            if (bktSuccParent.right.getKey() > succ.getKey()) {
-                                succ.right = bktSuccParent.right;
-                            } else {
-                                succ.left = bktSuccParent.right;
-                            }
+                        if(bktSuccParent.right!=null) {
                             bktSuccParent.right.parent = succ;
+                            succ.right =  bktSuccParent.right;
                         }
                         bktSuccParent.right = succ;
                     } else {
+                        //if the succesor originally had a right son (couldn't have had a left one or it would have been the successor itself)
+                        if (bktSuccParent.left != null & bktSuccParent.left != succ) {
+                            succ.right = bktSuccParent.left;
+                            bktSuccParent.left.parent = succ;
+                        }
+                        else
+                            succ.right=null;
                         bktSuccParent.left = succ;
                     }
                     succ.parent = bktSuccParent;
