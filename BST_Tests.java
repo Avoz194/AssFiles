@@ -316,23 +316,21 @@ public class BST_Tests {
         bst.insert(b96);
 
         //Tests part:
-        //Test 1:
-        bst.delete(b100);
-        bst.insert(b100);
-        System.out.println("100 "+ bst.search(100));
+
+        bst.delete(b30);
+        bst.insert(b30);
         bst.print();
-        bst.backtrack();
-        System.out.println("100 "+ bst.search(100));
+        System.out.println("30 "+ bst.search(30));
         bst.print();
         bst.backtrack();
         bst.print();
-
-        bst.retrack();
-        System.out.println("100 "+ bst.search(100));
+        bst.backtrack();
         bst.print();
-
         bst.retrack();
-
+        System.out.println("30 "+ bst.search(15));
+        bst.print();
+        System.out.println("30 "+ bst.search(15));
+        bst.retrack();
         bst.print();
 
 
@@ -351,14 +349,18 @@ public class BST_Tests {
             6. Case 2 delete and insert (same area) V
                 remove (100) insert (97) V
                 remove (100) insert (101) V
-            7. Case 2 delete and insert (same value)
-                remove (100) insert (100)
-            8. Case 3 delete and insert (not same area)
-            9. Case 3 delete and insert (same area)
-            8. Case 3 delete and insert (same value)
-            9. Case 3 delete and insert (root)
-            10.Case 3 delete and insert (value to right of successor)
-            11.Case 3 delete and insert (value to left of successor)
+            7. Case 2 delete and insert (same value) V
+                remove (100) insert (100)            V
+            8. Case 3 delete and insert (not same area)V
+                remove (30) insert (-1)           V
+            9. Case 3 delete and insert (same area) V
+                remove (30) insert (51)             V
+            10. Case 3 delete and insert (same value) V
+                remove (30) insert (30)             V
+            11. Case 3 delete and insert (root)     V
+                remove (15) insert (15)             V
+            12.Case 3 delete and insert (value to right of successor)
+            13.Case 3 delete and insert (value to left of successor)
 
          */
        /*Test small cases
