@@ -5,7 +5,7 @@ import java.io.PrintStream;
 
 public class BST_Tests {
     public static void main(String[] args) {
-        Stack stack = new Stack();
+      /*  Stack stack = new Stack();
         Stack stackRedo = new Stack();
         BacktrackingBST bst = new BacktrackingBST(stack, stackRedo);
         Stack stack1 = new Stack();
@@ -266,7 +266,7 @@ public class BST_Tests {
         System.out.println("after:");
         bst1.delete(n3);
         bst1.print();
-        System.out.println();
+        System.out.println();}*/
 
 
 
@@ -275,50 +275,112 @@ public class BST_Tests {
 
 
 
-    }
+
  /*   public static void main(String[] args) {
         testPrint();
     }
 
     private static void testPrint() {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+      /*  ByteArrayOutputStream baos = new ByteArrayOutputStream();
         PrintStream ps = new PrintStream(baos);
         PrintStream old = System.out;
-        System.setOut(ps);
-
-        System.out.println("Array:");
-        BacktrackingArray array = new BacktrackingArray(new Stack(), 100);
-        array.insert(4);
-        array.insert(8);
-        array.insert(2);
-        array.insert(3);
-        array.print();
-        System.out.println();
-
-        System.out.println("Sorted Array:");
-        BacktrackingSortedArray sortedArray = new BacktrackingSortedArray(new Stack(), 100);
-        sortedArray.insert(4);
-        sortedArray.insert(8);
-        sortedArray.insert(2);
-        sortedArray.insert(3);
-        sortedArray.print();
-        System.out.println();
+        System.setOut(ps);*/
 
         System.out.println("BST:");
         BacktrackingBST bst = new BacktrackingBST(new Stack(), new Stack());
-        bst.insert(new BacktrackingBST.Node(12, null));
-        bst.insert(new BacktrackingBST.Node(6, null));
-        bst.insert(new BacktrackingBST.Node(1, null));
-        bst.insert(new BacktrackingBST.Node(29, null));
-        bst.insert(new BacktrackingBST.Node(17, null));
-        bst.insert(new BacktrackingBST.Node(33, null));
-        bst.insert(new BacktrackingBST.Node(30, null));
-        bst.insert(new BacktrackingBST.Node(46, null));
+        BacktrackingBST.Node b15 = new BacktrackingBST.Node(15, null);
+        bst.insert(b15);
+        BacktrackingBST.Node b30 = new BacktrackingBST.Node(30, null);
+        bst.insert(b30);
+        BacktrackingBST.Node b0 = new BacktrackingBST.Node(0, null);
 
+        bst.insert(b0);
+        BacktrackingBST.Node b17 = new BacktrackingBST.Node(17, null);
 
+        bst.insert(b17);
+        BacktrackingBST.Node b3 = new BacktrackingBST.Node(3, null);
+        bst.insert(b3);
+        BacktrackingBST.Node b5 = new BacktrackingBST.Node(5, null);
+        bst.insert(b5);
+        BacktrackingBST.Node b78 = new BacktrackingBST.Node(78, null);
+        bst.insert(b78);
+        BacktrackingBST.Node b50 = new BacktrackingBST.Node(50, null);
+        bst.insert(b50);
+
+        BacktrackingBST.Node b51 = new BacktrackingBST.Node(51, null);
+        bst.insert(b51);
+
+        BacktrackingBST.Node b100 = new BacktrackingBST.Node(100, null);
+        bst.insert(b100);
+        BacktrackingBST.Node b96 = new BacktrackingBST.Node(96, null);
+        bst.insert(b96);
+
+        //Tests part:
+        //Test 1:
+        bst.delete(b100);
+        bst.insert(b100);
+        System.out.println("100 "+ bst.search(100));
+        bst.print();
+        bst.backtrack();
+        System.out.println("100 "+ bst.search(100));
+        bst.print();
+        bst.backtrack();
+        bst.print();
+
+        bst.retrack();
+        System.out.println("100 "+ bst.search(100));
+        bst.print();
+
+        bst.retrack();
 
         bst.print();
 
+
+
+
+        /* Backtrack and Retrack tests:
+            1. Case one delete (96), (5)   V
+            1.5 Case one - root            V
+            2. Case 2 delete (0), (100)    V
+            2.5 case 2 - root              V
+            3. Case 3 delete none root (30)V
+            3.5 redelete succ (50)         V
+            4. Case 3 delete root (15)     V
+            5. case 2 delete and insert (not same area) V
+                remove (3), insert (96)     V
+            6. Case 2 delete and insert (same area) V
+                remove (100) insert (97) V
+                remove (100) insert (101) V
+            7. Case 2 delete and insert (same value)
+                remove (100) insert (100)
+            8. Case 3 delete and insert (not same area)
+            9. Case 3 delete and insert (same area)
+            8. Case 3 delete and insert (same value)
+            9. Case 3 delete and insert (root)
+            10.Case 3 delete and insert (value to right of successor)
+            11.Case 3 delete and insert (value to left of successor)
+
+         */
+       /*Test small cases
+        BacktrackingBST bst2 = new BacktrackingBST(new Stack(), new Stack());
+        BacktrackingBST.Node b15s = new BacktrackingBST.Node(15, null);
+        BacktrackingBST.Node b30s = new BacktrackingBST.Node(30, null);
+        bst2.insert(b15s);
+        bst2.insert(b30s);
+        bst2.delete(b15s);
+        bst2.backtrack();
+        bst2.print();
+        bst2.retrack();
+        bst2.print(); */
+
+
+
+        //"15 0 3 5 30 17 78 100 96"
+
+
+
+
+        /*
         System.out.flush();
         System.setOut(old);
         String expected ="Array:\n" +
@@ -326,7 +388,7 @@ public class BST_Tests {
                 "Sorted Array:\n" +
                 "2 3 4 8\n" +
                 "BST:\n" +
-                "12 6 1 29 17 33 30 46";
+                "15 0 -5 3 5 30 17 78 100 96";
         String actual = baos.toString()
                 .replaceAll("\r", "")
                 .replaceAll(" \n", "\n")
@@ -339,8 +401,8 @@ public class BST_Tests {
             System.out.println("Success!");
         } else {
             System.out.println("Failed!");
-        }
+        }*/
     }
 
- */
+
 }

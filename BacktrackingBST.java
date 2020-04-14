@@ -33,6 +33,9 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
     public void insert(BacktrackingBST.Node z) {
         Node prev = null;
         Node curr = root;
+        z.right=null;
+        z.left=null;
+        z.parent=null;
         while (curr != null) {
             prev = curr;
             if (z.key < curr.key) {
@@ -288,6 +291,8 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
 
             //manually redo operation of *insert*, manually and leave log. Avoid using Insert function to avoid unnecessary runtime
             if (redoOp.getOperation() == 'i') {
+                reCurr.left=null;
+                reCurr.right=null;
                 reCurr.parent = reParent;
                 if (reParent == null) {
                     root = reCurr;
