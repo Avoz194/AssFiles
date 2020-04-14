@@ -288,7 +288,7 @@ public class BST_Tests {
         System.setOut(ps);*/
 
  //************* Aviv's Tests***************
-/*
+
         System.out.println("BST:");
         BacktrackingBST bst = new BacktrackingBST(new Stack(), new Stack());
         BacktrackingBST.Node b15 = new BacktrackingBST.Node(15, null);
@@ -367,7 +367,7 @@ public class BST_Tests {
         bst.print();
         bst.retrack();
         bst.print();
-*/
+
 
 
 
@@ -444,7 +444,7 @@ public class BST_Tests {
             System.out.println("Failed!");
         }*/
 
-
+/*
         System.out.println("BST:");
         BacktrackingBST bst = new BacktrackingBST(new Stack(), new Stack());
         BacktrackingBST.Node b5 = new BacktrackingBST.Node(5, null);
@@ -490,7 +490,7 @@ public class BST_Tests {
         bst.print();
 
         bst.backtrack();
-        bst.print();
+        bst.print();*/
         }
 
 

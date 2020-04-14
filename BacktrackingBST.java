@@ -381,29 +381,6 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
             }
             System.out.println();
         }
-    }    // TODO remove
-    public void treeFormPrint(){
-        if (root != null) treeFormPrint(root, "");
-        else System.out.println("Empty tree");
-    }
-
-    // TODO remove
-    private void treeFormPrint(Node node, String acc){
-        String signSpace = acc + "            ";
-        if (node.right != null) {
-            treeFormPrint(node.right, acc+"               ");
-            if (node.right.parent == node)
-                System.out.println(signSpace + "/");
-            else System.out.println(signSpace + "$");
-        }
-        System.out.println(acc + "| key: " + node.key);
-        System.out.println(acc + "| par: " + node.parent);
-        if (node.left != null) {
-            if (node.left.parent == node)
-                System.out.println(signSpace + "\\");
-            else System.out.println(signSpace + "$");
-            treeFormPrint(node.left, acc+"               ");
-        }
     }
     public void print() {
         printPreOrder();
@@ -435,9 +412,6 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
             System.out.print(" " + key);
             if (left != null) left.preOrderPrint();
             if (right != null) right.preOrderPrint();
-        }
-        public String toString() {
-            return key+" ";
         }
 
     }
