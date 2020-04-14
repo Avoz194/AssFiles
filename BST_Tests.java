@@ -286,6 +286,7 @@ public class BST_Tests {
         PrintStream old = System.out;
         System.setOut(ps);*/
 
+ //************* Aviv's Tests***************
         System.out.println("BST:");
         BacktrackingBST bst = new BacktrackingBST(new Stack(), new Stack());
         BacktrackingBST.Node b15 = new BacktrackingBST.Node(15, null);
@@ -381,6 +382,7 @@ public class BST_Tests {
 
 
 
+        //************* Aviv's Tests***************
 
         /*
         System.out.flush();
