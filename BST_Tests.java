@@ -3,7 +3,7 @@ import com.sun.jmx.snmp.SnmpUsmKeyHandler;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
-public class BST_Tests {
+public class BST_Tests { //test
     public static void main(String[] args) {
 
       /*  Stack stack = new Stack();
