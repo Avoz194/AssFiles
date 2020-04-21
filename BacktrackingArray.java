@@ -27,7 +27,7 @@ public class BacktrackingArray implements Array<Integer>, Backtrack {
     }
 
     public void insert(Integer x) {
-        if (currSize < arr.length - 1) { //insert only if array is not full
+        if (currSize <= arr.length - 1) { //insert only if array is not full
             arr[currSize] = x;
             currSize = currSize + 1;
             stack.push(new ArrTrackingData(currSize - 1, x, 'i')); //insert into stack
