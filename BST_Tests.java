@@ -3,8 +3,9 @@ import com.sun.jmx.snmp.SnmpUsmKeyHandler;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
-public class BST_Tests {
+public class BST_Tests { //test
     public static void main(String[] args) {
+
       /*  Stack stack = new Stack();
         Stack stackRedo = new Stack();
         BacktrackingBST bst = new BacktrackingBST(stack, stackRedo);
@@ -287,6 +288,7 @@ public class BST_Tests {
         System.setOut(ps);*/
 
  //************* Aviv's Tests***************
+
         System.out.println("BST:");
         BacktrackingBST bst = new BacktrackingBST(new Stack(), new Stack());
         BacktrackingBST.Node b15 = new BacktrackingBST.Node(15, null);
@@ -318,21 +320,56 @@ public class BST_Tests {
 
         //Tests part:
 
-        bst.delete(b30);
-        bst.insert(b30);
         bst.print();
-        System.out.println("30 "+ bst.search(30));
+
+        bst.delete(b78);
         bst.print();
+
+        BacktrackingBST.Node b97 = new BacktrackingBST.Node(97, null);
+        bst.insert(b97);
+        bst.print();
+        bst.delete(b15);
+        bst.print();
+        BacktrackingBST.Node bms = new BacktrackingBST.Node(-10, null);
+        bst.insert(bms);
+        bst.print();
+
         bst.backtrack();
         bst.print();
         bst.backtrack();
         bst.print();
-        bst.retrack();
-        System.out.println("30 "+ bst.search(15));
+        bst.backtrack();
         bst.print();
-        System.out.println("30 "+ bst.search(15));
+
+        bst.backtrack();
+        bst.print();
+
         bst.retrack();
         bst.print();
+        bst.retrack();
+        bst.print();
+        bst.retrack();
+        bst.print();
+
+        bst.retrack();
+        bst.print();
+
+        bst.retrack();
+        bst.print();
+
+        bst.retrack();
+        bst.print();
+
+        bst.retrack();
+        bst.print();
+
+        bst.retrack();
+        bst.print();
+        bst.retrack();
+        bst.print();
+
+
+
 
 
 
@@ -374,7 +411,7 @@ public class BST_Tests {
         bst2.backtrack();
         bst2.print();
         bst2.retrack();
-        bst2.print(); */
+        bst2.print();
 
 
 
@@ -406,7 +443,56 @@ public class BST_Tests {
         } else {
             System.out.println("Failed!");
         }*/
-    }
+
+/*
+        System.out.println("BST:");
+        BacktrackingBST bst = new BacktrackingBST(new Stack(), new Stack());
+        BacktrackingBST.Node b5 = new BacktrackingBST.Node(5, null);
+        bst.insert(b5);
+        BacktrackingBST.Node b4 = new BacktrackingBST.Node(4, null);
+        bst.insert(b4);
+        BacktrackingBST.Node b1 = new BacktrackingBST.Node(1, null);
+
+        bst.insert(b1);
+        BacktrackingBST.Node b2 = new BacktrackingBST.Node(2, null);
+
+        bst.insert(b2);
+        BacktrackingBST.Node b10 = new BacktrackingBST.Node(10, null);
+        bst.insert(b10);
+        BacktrackingBST.Node b8 = new BacktrackingBST.Node(8, null);
+        bst.insert(b8);
+        BacktrackingBST.Node b6 = new BacktrackingBST.Node(6, null);
+        bst.insert(b6);
+        BacktrackingBST.Node b9 = new BacktrackingBST.Node(9, null);
+        bst.insert(b9);
+
+
+        //Tests part:
+
+        bst.print();
+        bst.delete(b8);
+        bst.print();
+
+        BacktrackingBST.Node b7 = new BacktrackingBST.Node(7, null);
+        bst.insert(b7);
+        bst.print();
+        bst.delete(b5);
+        bst.print();
+        BacktrackingBST.Node b3 = new BacktrackingBST.Node(3, null);
+        bst.insert(b3);
+        bst.print();
+
+        bst.backtrack();
+        bst.print();
+        bst.backtrack();
+        bst.print();
+        bst.backtrack();
+        bst.print();
+
+        bst.backtrack();
+        bst.print();*/
+        }
+
 
 
 }

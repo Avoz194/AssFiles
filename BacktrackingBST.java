@@ -255,10 +255,11 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
                     place successor under it's succParent
                     */
                     if (bktSuccParent.getKey() < succ.getKey()) { // reconnecting succ to it's parent
-                        if(bktSuccParent.right!=null) {
+                        if(bktSuccParent.right!=null&bktSuccParent.right!=succ) {
                             bktSuccParent.right.parent = succ;
                             succ.right =  bktSuccParent.right;
                         }
+                        else if (bktSuccParent.right==null) succ.right=null;
                         bktSuccParent.right = succ;
                     } else {
                         //if the succesor originally had a right son (couldn't have had a left one or it would have been the successor itself)
@@ -266,14 +267,15 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
                             succ.right = bktSuccParent.left;
                             bktSuccParent.left.parent = succ;
                         }
-                        else
+                        else {
                             succ.right=null;
+                        }
+
                         bktSuccParent.left = succ;
                     }
                     succ.parent = bktSuccParent;
                     //Remove successor's left child (as couldn't have had one before)
-                    if (succ.left != null)
-                        succ.left = null;  //TODO: in case successor's father had
+                    succ.left = null;
                 }
             } else { // last operation was an insert
                 deleteUpToChild(bktCurr); // delete bktCurr - case 1
@@ -380,7 +382,6 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
             System.out.println();
         }
     }
-
     public void print() {
         printPreOrder();
     }
@@ -412,6 +413,7 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
             if (left != null) left.preOrderPrint();
             if (right != null) right.preOrderPrint();
         }
+
     }
 
 
