@@ -165,7 +165,7 @@ public class BST_Tests { //test
         bst.delete(n6);
         bst.print();
         System.out.println("after backtrack:");
-          bst.backtrack(); //TODO; FUCKKKKKKKKKKK
+          bst.backtrack();
         bst.print();
 
 

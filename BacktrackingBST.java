@@ -341,7 +341,7 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
     public void printPreOrder() {
         //We'll print the tree using recursive function created in the node class;
         //We've decided not to use a String to build the tree's PreOrder to avoid use of extra memory.
-        if (root == null) { //TODO: Make sure if we need to print empty tree
+        if (root == null) {
             System.out.println("");
         } else {
             Node x = root;
@@ -352,36 +352,6 @@ public class BacktrackingBST implements Backtrack, ADTSet<BacktrackingBST.Node> 
         }
     }
 
-    public void printPreOrder2() {
-        //Alternative no-memory using print function
-        if (root == null) { //TODO: Tests it
-            System.out.println("");
-        } else {
-            Node current = root;
-            System.out.print(current.key);
-            Node pre = null;
-            boolean upFromRight = false;
-            while (current != null) {
-                if (pre != current & current != root)
-                    System.out.print(" " + current.key);
-                if (current.left != null & (pre != current)) {
-                    pre = current;
-                    current = current.left;
-                } else if (current.right != null & !upFromRight) {
-                    pre = current;
-                    current = current.right;
-                } else {
-                    pre = current;
-                    current = current.parent;
-                    if (current != null && current.right == pre)
-                        upFromRight = true;
-                    else upFromRight = false;
-                    pre = current;
-                }
-            }
-            System.out.println();
-        }
-    }
     public void print() {
         printPreOrder();
     }

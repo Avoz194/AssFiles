@@ -617,6 +617,31 @@ public class MainTests {
         System.out.println("\n");
 
 
+        // Ron test
+
+        System.out.println ("ron test");
+
+        Stack st3 = new Stack();
+        BacktrackingArray backarr3 = new BacktrackingArray(st,10);
+        backarr3.insert(289);
+        backarr3.insert(884);
+        backarr3.insert(697);
+        backarr3.insert(487);
+        backarr3.insert(987);
+        backarr3.insert(254);
+        backarr3.insert(152);
+        backarr3.insert(-100);
+        backarr3.insert(-817);
+        backarr3.insert(3);
+
+        backarr3.print();
+
+        System.out.println("succ of 884. should be index - 4 (value 987).  return:" + backarr3.successor(1));
+
+
+
+
+
 
 
     }
